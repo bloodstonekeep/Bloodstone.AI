@@ -1,0 +1,3 @@
+[submodule "Assets/Plugins/Bloodstone.Unity"]
+	path = Assets/Plugins/Bloodstone.Unity
+	url = git@github.com:Ursanon/Bloodstone.Unity.git
