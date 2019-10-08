@@ -5,21 +5,21 @@ namespace Bloodstone.AI
     public struct AgentStatistics
     {
         [SerializeField]
-        private Vector3 _velocity;
+        private float _maximumSpeed;
 
         [SerializeField]
-        private Vector3 _angularVelocity;
+        private float _maximumAngularSpeed;
 
-        public Vector3 Velocity
+        public float MaximumSpeed
         {
-            get => _velocity;
-            set => _velocity = value;
+            get => _maximumSpeed;
+            set => _maximumSpeed = value;
         }
 
-        public Vector3 AngularVelocity
+        public float MaximumAngularSpeed
         {
-            get => _angularVelocity;
-            set => _angularVelocity = value;
+            get => _maximumAngularSpeed;
+            set => _maximumAngularSpeed = value;
         }
     }
 }
