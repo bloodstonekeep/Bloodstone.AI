@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 9021348618566789623}
   - component: {fileID: 9021348618566789620}
-  - component: {fileID: 9021348618566789609}
-  - component: {fileID: 9021348618566789622}
+  - component: {fileID: 1449196317}
+  - component: {fileID: 1449196316}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: boid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 9021348618566789621}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9021348618566789609
+--- !u!114 &1449196317
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,15 +92,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 9021348618566789621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e0062589d250284a825aa3856dbda97, type: 3}
+  m_Script: {fileID: 11500000, guid: d0c17cd3ca11e454696a7bfa853b6e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxSpeed: 3
-  MaxAngularVelocity: 2
-  UseAngularVelocity: 1
-  Velocity: {x: 0, y: 0}
-  AngularVelocity: 0
---- !u!114 &9021348618566789622
+  _statistics:
+    _maximumSpeed: 1
+    _maximumAngularSpeed: 1
+  _prediction:
+    Velocity: {x: 0, y: 0, z: 0}
+    AngularVelocity: {x: 0, y: 0, z: 0}
+--- !u!114 &1449196316
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,9 +110,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 9021348618566789621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fc6167c0d132a5479c2825c4e5b65aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 22f535c2e1c1f0a44811c72bc09f2e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
-  _perceptionRadius: 2.5
-  _separationRadius: 1.5
+  _velocity: {x: 0, y: 0, z: 0}
+  _angularVelocity: {x: 0, y: 0, z: 0}

@@ -6,25 +6,15 @@ namespace Bloodstone.AI
     {
         [SerializeField]
         private AgentStatistics _statistics;
-
         [SerializeField]
-        private Vector3 _velocity;
-
-        [SerializeField]
-        private Vector3 _angularVelocity;
-
-        public Vector3 Velocity
-        {
-            get => _velocity;
-            set => _velocity = value;
-        }
-
-        public Vector3 AngularVelocity
-        {
-            get => _angularVelocity;
-            set => _angularVelocity = value;
-        }
+        private MovementPrediction _prediction;
 
         public AgentStatistics Statistics => _statistics;
+
+        public MovementPrediction Prediction
+        {
+            get => _prediction;
+            internal set => _prediction = value;
+        }
     }
 }

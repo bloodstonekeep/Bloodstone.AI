@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Bloodstone.AI
 {
+    [Serializable]
     public struct AgentStatistics
     {
         [SerializeField]
