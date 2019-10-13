@@ -371,6 +371,11 @@ PrefabInstance:
       propertyPath: _statistics._maximumAngularSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5618653674767595149, guid: 38e1d56dcdcec2f4e890ce0a12d984d5,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38e1d56dcdcec2f4e890ce0a12d984d5, type: 3}
 --- !u!1 &1929253914 stripped

@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Bloodstone.AI.Steering
 {
-    [RequireComponent(typeof(AISystem))]
+    [RequireComponent(typeof(AISubsystem))]
     public class SteeringPipeline : MonoBehaviour, ISteeringPipeline
     {
-        private AISystem _system;
+        private AISubsystem _subsystem;
         private Agent _agent;
 
         [SerializeField]
@@ -17,17 +17,17 @@ namespace Bloodstone.AI.Steering
 
         private void Awake()
         {
-            _system = GetComponent<AISystem>();
+            _subsystem = GetComponent<AISubsystem>();
         }
 
         private void OnEnable()
         {
-            _system.Add(this);
+            _subsystem.Add(this);
         }
 
         private void OnDisable()
         {
-            _system.Remove(this);
+            _subsystem.Remove(this);
         }
 
         public Vector3 MovementSteering()

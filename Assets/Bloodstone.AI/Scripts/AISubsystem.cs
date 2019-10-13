@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Bloodstone.AI
 {
     [RequireComponent(typeof(Agent))]
-    sealed public class AISystem : MonoBehaviour
+    sealed public class AISubsystem : MonoBehaviour
     {
         private List<ISteeringPipeline> _agentsPipelines = new List<ISteeringPipeline>();
         private Agent _agent;
