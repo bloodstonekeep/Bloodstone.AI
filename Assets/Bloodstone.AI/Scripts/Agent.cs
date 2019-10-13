@@ -13,14 +13,14 @@ namespace Bloodstone.AI
         private AgentStatistics _statistics;
 
         [SerializeField]
-        private MovementPrediction _prediction;
+        private SteeringPrediction _prediction;
 
         public Vector3 Position { get; set; }
         public Quaternion Rotation { get; set; }
 
         public AgentStatistics Statistics => _statistics;
 
-        public MovementPrediction Prediction
+        public SteeringPrediction Prediction
         {
             get => _prediction;
             internal set => _prediction = value;
