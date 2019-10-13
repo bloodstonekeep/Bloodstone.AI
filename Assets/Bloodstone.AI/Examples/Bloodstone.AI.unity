@@ -371,6 +371,10 @@ PrefabInstance:
       propertyPath: _statistics._maximumAngularSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 317442881, guid: 38e1d56dcdcec2f4e890ce0a12d984d5, type: 3}
+      propertyPath: _velocity.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5618653674767595149, guid: 38e1d56dcdcec2f4e890ce0a12d984d5,
         type: 3}
       propertyPath: m_Enabled
@@ -397,32 +401,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movement:
-  - _behaviour: {fileID: 1929253916}
+  - _behaviour: {fileID: 0}
     _weight: 1
   _rotation:
-  - _behaviour: {fileID: 1929253917}
+  - _behaviour: {fileID: 0}
     _weight: 1
---- !u!114 &1929253916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1929253914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7df2fd1fe3c7fa242bee91058a3c5cb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1929253917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1929253914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49d20184d86649540817fa9d7766e676, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

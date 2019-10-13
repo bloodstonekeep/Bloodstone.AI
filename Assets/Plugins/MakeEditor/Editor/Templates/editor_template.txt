@@ -1,0 +1,7 @@
+using UnityEditor;
+
+#NAMESPACE#
+[CustomEditor(typeof(#CLASS_NAME#))]
+public class #CLASS_NAME#Editor : Editor
+{
+}
