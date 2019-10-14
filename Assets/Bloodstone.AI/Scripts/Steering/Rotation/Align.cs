@@ -15,7 +15,20 @@ namespace Bloodstone.AI.Steering
         {
             var rotation = Quaternion.Inverse(Agent.Rotation) * TargetRotation;
 
-            rotation.ToAngleAxis(out float angle, out Vector3 axis);
+            var angle = 2 * Mathf.Acos(rotation.w);
+            var halfSin = Mathf.Sin(angle / 2);
+            if (halfSin == 0)
+            {
+                return Vector3.zero;
+            }
+
+            angle *= Mathf.Rad2Deg;
+            var axis = new Vector3
+            {
+                x = rotation.x / halfSin,
+                y = rotation.y / halfSin,
+                z = rotation.z / halfSin
+            };
 
             while (angle > 180)
             {
@@ -27,24 +40,26 @@ namespace Bloodstone.AI.Steering
                 angle += 360;
             }
 
-            return axis * angle * Agent.Statistics.MaximumAngularSpeed;
+            var result = axis * angle * Agent.Statistics.MaximumAngularSpeed;
+
+            return result;
         }
 
         private void OnDrawGizmos()
         {
-            if(_showGizmos)
+            if (_showGizmos)
             {
                 Vector3 forward;
 
-                switch(Agent.Plane)
+                switch (Agent.WorldOrientation)
                 {
-                    case Agent.PlaneMode.XY:
+                    case WorldOrientation.XY:
                         {
                             forward = Vector3.right;
                         }
                         break;
-                    case Agent.PlaneMode.XZ:
-                    case Agent.PlaneMode.XYZ:
+                    case WorldOrientation.XZ:
+                    case WorldOrientation.XYZ:
                         {
                             forward = Vector3.forward;
                         }
