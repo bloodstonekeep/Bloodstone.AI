@@ -6,6 +6,9 @@ namespace Bloodstone.AI.Steering
     [RequireComponent(typeof(Agent))]
     public abstract class SteeringBehaviour : MonoBehaviour, ISteeringBehaviour
     {
+        [SerializeField]
+        protected bool showGizmos;
+
         protected Agent Agent { get; private set; }
 
         public abstract Vector3 GetSteering();
@@ -13,6 +16,18 @@ namespace Bloodstone.AI.Steering
         protected void Awake()
         {
             Agent = GetComponent<Agent>();
+        }
+
+        protected virtual void DrawGizmos()
+        {
+        }
+
+        private void OnDrawGizmos()
+        {
+            if(showGizmos)
+            {
+                DrawGizmos();
+            }
         }
     }
 

@@ -8,9 +8,6 @@ namespace Bloodstone.AI.Steering
         private const float HalfTau = Mathf.PI;
         private const float GizmosLength = 3f;
 
-        [SerializeField]
-        private bool _showGizmos;
-
         public Quaternion TargetRotation;
 
         public override Vector3 GetSteering()
@@ -53,38 +50,35 @@ namespace Bloodstone.AI.Steering
             return angle;
         }
 
-        private void OnDrawGizmos()
+        protected override void DrawGizmos()
         {
-            if (_showGizmos)
+            Vector3 forward;
+
+            switch (Agent.WorldOrientation)
             {
-                Vector3 forward;
-
-                switch (Agent.WorldOrientation)
-                {
-                    case WorldOrientation.XY:
-                        {
-                            forward = Vector3.right;
-                        }
-                        break;
-                    case WorldOrientation.XZ:
-                    case WorldOrientation.XYZ:
-                        {
-                            forward = Vector3.forward;
-                        }
-                        break;
-                    default:
-                        throw new System.NotSupportedException();
-                }
-
-                var targetRotation = TargetRotation * forward;
-
-                forward = Agent.Rotation * forward;
-
-                Gizmos.color = Color.red;
-                Gizmos.DrawLine(Agent.Position + forward, Agent.Position + forward * GizmosLength);
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawLine(Agent.Position + targetRotation, Agent.Position + targetRotation * GizmosLength);
+                case WorldOrientation.XY:
+                    {
+                        forward = Vector3.right;
+                    }
+                    break;
+                case WorldOrientation.XZ:
+                case WorldOrientation.XYZ:
+                    {
+                        forward = Vector3.forward;
+                    }
+                    break;
+                default:
+                    throw new System.NotSupportedException();
             }
+
+            var targetRotation = TargetRotation * forward;
+
+            forward = Agent.Rotation * forward;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(Agent.Position + forward, Agent.Position + forward * GizmosLength);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(Agent.Position + targetRotation, Agent.Position + targetRotation * GizmosLength);
         }
     }
 }
