@@ -21,14 +21,14 @@ namespace Bloodstone.AI.Steering
                 return Vector3.zero;
             }
 
+            angle = NormalizeAngle(angle);
+
             var axis = new Vector3
             {
                 x = rotation.x / halfSin,
                 y = rotation.y / halfSin,
                 z = rotation.z / halfSin
             };
-
-            angle = NormalizeAngle(angle);
 
             return axis * angle * Mathf.Rad2Deg * Agent.Statistics.MaximumAngularSpeed;
         }
