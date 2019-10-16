@@ -1,7 +1,7 @@
 ﻿using Bloodstone.AI.Steering;
 using UnityEngine;
 
-namespace Bloodstone.AI
+namespace Bloodstone.AI.Steering
 {
     public class Arrive : Seek
     {
