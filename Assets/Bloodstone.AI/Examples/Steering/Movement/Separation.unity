@@ -605,7 +605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 317442881, guid: 38e1d56dcdcec2f4e890ce0a12d984d5, type: 3}
       propertyPath: _statistics._maximumAngularSpeed
-      value: 5
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 317442881, guid: 38e1d56dcdcec2f4e890ce0a12d984d5, type: 3}
       propertyPath: _velocity.x
@@ -639,7 +639,9 @@ MonoBehaviour:
   _movement:
   - _behaviour: {fileID: 1929253916}
     _weight: 1
-  _rotation: []
+  _rotation:
+  - _behaviour: {fileID: 1929253920}
+    _weight: 1
 --- !u!114 &1929253916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -652,9 +654,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe69a91cc33d74429a33b8a2d575f4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 1
+  showGizmos: 0
   _targets:
   - {fileID: 640079500}
   - {fileID: 605029151}
   _threshold: 2
   _decayCoefficient: -1
+--- !u!114 &1929253920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929253914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0449706d0eecf344a7bf995b487271a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showGizmos: 0
+  TargetRotation: {x: 0, y: 0, z: 0, w: 0}
