@@ -3,15 +3,22 @@ using UnityEngine;
 
 namespace Bloodstone.AI.Steering
 {
+    [RequireComponent(typeof(AISubsystem))]
+
     public abstract class LocalAwarenessMovement : MovementSteering
     {
-        [SerializeField]
-        protected List<Agent> neighborhood;
+        private AISubsystem _subsystem;
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            _subsystem = GetComponent<AISubsystem>();
+        }
 
         public List<Agent> Neighborhood
         {
-            get => neighborhood;
-            set => neighborhood = value;
+            get => _subsystem.Neighborhood;
         }
     }
 }

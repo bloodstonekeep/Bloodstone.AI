@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Bloodstone.AI.Steering;
 using UnityEngine;
 
@@ -10,9 +11,13 @@ namespace Bloodstone.AI
         private List<ISteeringPipeline> _agentsPipelines = new List<ISteeringPipeline>();
         private Agent _agent;
 
+        public List<Agent> Neighborhood { get; set; }
+
         private void Awake()
         {
             _agent = GetComponent<Agent>();
+            Neighborhood = FindObjectsOfType<Agent>().Where(a => a != _agent)
+                                                        .ToList();
         }
 
         public void Add(ISteeringPipeline steeringPipeline)
@@ -33,6 +38,13 @@ namespace Bloodstone.AI
             {
                 newSteering.Velocity += pipeline.MovementSteering();
                 newSteering.AngularVelocity += pipeline.RotationSteering();
+            }
+
+            int count = _agentsPipelines.Count;
+            if (count != 0)
+            {
+                newSteering.Velocity /= count;
+                newSteering.AngularVelocity /= count;
             }
 
             _agent.Prediction = newSteering;

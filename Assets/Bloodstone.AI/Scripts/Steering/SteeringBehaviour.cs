@@ -13,7 +13,7 @@ namespace Bloodstone.AI.Steering
 
         public abstract Vector3 GetSteering();
 
-        protected void Awake()
+        protected virtual void Awake()
         {
             Agent = GetComponent<Agent>();
         }

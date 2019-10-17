@@ -2,7 +2,7 @@
 
 namespace Bloodstone.AI.Steering
 {
-    public class VelocityMatch : LocalAwarenessMovement
+    public class Cohesion : LocalAwarenessMovement
     {
         public override Vector3 GetSteering()
         {
@@ -11,15 +11,16 @@ namespace Bloodstone.AI.Steering
                 return Vector3.zero;
             }
 
-            Vector3 netForce = Vector3.zero;
+            Vector3 averagePosition = Vector3.zero;
 
             foreach (var agent in Neighborhood)
             {
-                netForce += agent.Velocity;
+                averagePosition += agent.Position;
             }
 
-            netForce /= Neighborhood.Count;
+            averagePosition /= Neighborhood.Count;
 
+            var netForce = averagePosition - Agent.Position;
             return netForce.normalized * Agent.Statistics.MaximumSpeed;
         }
     }

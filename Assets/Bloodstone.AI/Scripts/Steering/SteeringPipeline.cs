@@ -55,7 +55,7 @@ namespace Bloodstone.AI.Steering
                 {
                     continue;
                 }
-                result += input[i].Behaviour.GetSteering();
+                result += input[i].Behaviour.GetSteering() * w;
             }
 
             return result / input.Count;

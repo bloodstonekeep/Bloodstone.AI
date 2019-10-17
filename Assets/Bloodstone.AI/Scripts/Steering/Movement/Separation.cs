@@ -14,9 +14,14 @@ namespace Bloodstone.AI.Steering
 
         public override Vector3 GetSteering()
         {
+            if(Neighborhood.Count == 0)
+            {
+                return Vector3.zero;
+            }
+
             Vector3 netForce = Vector3.zero;
 
-            foreach(var agent in Neighborhood)
+            foreach (var agent in Neighborhood)
             {
                 var translation = (agent.Position - Agent.Position);
                 var distance = translation.sqrMagnitude;
@@ -32,7 +37,7 @@ namespace Bloodstone.AI.Steering
                 }
             }
 
-            return netForce;
+            return netForce.normalized * Agent.Statistics.MaximumSpeed;
         }
 
         protected override void DrawGizmos()
