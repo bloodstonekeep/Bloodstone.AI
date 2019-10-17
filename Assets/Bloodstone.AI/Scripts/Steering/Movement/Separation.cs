@@ -24,8 +24,11 @@ namespace Bloodstone.AI.Steering
             {
                 var translation = (target.Position - Agent.Position);
                 var distance = translation.sqrMagnitude;
+                if(distance == 0)
+                {
+                    continue;
+                }
 
-                Debug.Log(distance);
                 if(distance < SquaredThreshold)
                 {
                     var strength = Mathf.Min(_decayCoefficient / distance, Agent.Statistics.MaximumSpeed);
