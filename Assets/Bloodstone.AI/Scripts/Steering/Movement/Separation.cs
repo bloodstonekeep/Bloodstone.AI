@@ -1,13 +1,9 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Bloodstone.AI.Steering
 {
-    public class Separation : MovementSteering
+    public class Separation : LocalAwarenessMovement
     {
-        [SerializeField]
-        private List<Agent> _targets;
-
         [SerializeField]
         private float _threshold = 1f;
 
@@ -20,9 +16,9 @@ namespace Bloodstone.AI.Steering
         {
             Vector3 netForce = Vector3.zero;
 
-            foreach(var target in _targets)
+            foreach(var agent in Neighborhood)
             {
-                var translation = (target.Position - Agent.Position);
+                var translation = (agent.Position - Agent.Position);
                 var distance = translation.sqrMagnitude;
                 if(distance == 0)
                 {
