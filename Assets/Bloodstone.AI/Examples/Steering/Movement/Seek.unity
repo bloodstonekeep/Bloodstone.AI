@@ -417,4 +417,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showGizmos: 0
-  TargetPosition: {x: 0, y: 0, z: 0}
+  TargetPosition: {x: 10, y: 0, z: 0}
