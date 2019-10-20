@@ -3094,7 +3094,7 @@ MonoBehaviour:
   _velocityMatchWeight: 0.5
   _separationWeight: 1
   _cohesionWeight: 0.5
-  _boidPrototype: {fileID: 9021348618566789609, guid: 38e1d56dcdcec2f4e890ce0a12d984d5,
+  _boidPrototype: {fileID: 4972070668979581739, guid: 64fc0ca292e0e3d4aa27de768ac792ac,
     type: 3}
 --- !u!1 &2128214175
 GameObject:
