@@ -13,8 +13,6 @@ public class FlockingBehaviour : MonoBehaviour
 
     private Agent2D _agent;
 
-    private List<Agent2D> _nearbyAgents = new List<Agent2D>();
-
     private void Awake()
     {
         _agent = GetComponent<Agent2D>();
@@ -55,8 +53,6 @@ public class FlockingBehaviour : MonoBehaviour
         var nearbyAgents = BoidsSpawner.Agents.Where(a => a.gameObject != gameObject)
                              .Where(a => (a.Position - _agent.Position).sqrMagnitude < _perceptionRadius * _perceptionRadius)
                              .ToList();
-
-        _nearbyAgents = nearbyAgents;
 
         var v1 = Cohesion(nearbyAgents) * BoidsSpawner.CohesionWeight;
         var v2 = Separation(nearbyAgents) * BoidsSpawner.SeparationWeight;
@@ -197,10 +193,5 @@ public class FlockingBehaviour : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_agent.Position, _separationRadius);
-
-        foreach(var agent in _nearbyAgents)
-        {
-            Gizmos.DrawWireSphere(agent.Position, 0.1f);
-        }
     }
 }
