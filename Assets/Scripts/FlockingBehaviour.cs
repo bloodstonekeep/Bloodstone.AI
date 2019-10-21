@@ -64,8 +64,8 @@ public class FlockingBehaviour : MonoBehaviour
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         var v4 = Flee(mousePos).normalized;
-        var v5 = CollisionAvoidance(nearbyAgents).normalized;
-        var v6 = ObstacleAvoidance().normalized;
+        var v5 = CollisionAvoidance(nearbyAgents).normalized * 2f;
+        var v6 = ObstacleAvoidance().normalized * 2f;
 
         return (v1 + v2 + v3 + v4 * 4f + v5 + v6) / 6;
     }
@@ -146,7 +146,7 @@ public class FlockingBehaviour : MonoBehaviour
             return Vector2.zero;
         }
 
-        float maxPredictionDistance = 1;
+        float maxPredictionDistance = _radius*1.5f;
 
         float timeToCollision = float.MaxValue;
         Agent2D target = null;
