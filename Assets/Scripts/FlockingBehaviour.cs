@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class FlockingBehaviour : MonoBehaviour
 {
-    public bool debug;
-
     [SerializeField]
     private float _perceptionRadius;
     [SerializeField]
     private float _separationRadius;
-
     [SerializeField]
     private float _radius = 0.1f;
 
@@ -45,16 +42,10 @@ public class FlockingBehaviour : MonoBehaviour
             rotationDiff += 360;
         }
 
-
         if(Mathf.Abs(rotationDiff) < 5)
         {
             rotationDiff /= 5;
         }
-
-        //if(debug)
-        //{
-        //    Debug.Log($"TargetRotation: {targetRotation} | Current: {currentRotation} | diff: {rotationDiff}");
-        //}
 
         return rotationDiff;
     }

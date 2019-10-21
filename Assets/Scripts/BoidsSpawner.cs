@@ -43,20 +43,6 @@ public class BoidsSpawner : MonoBehaviour
         UpdateCounter();
     }
 
-    [ContextMenu("Add Boid test")]
-    public void AddBoid_t()
-    {
-        var newAgent = Instantiate(_boidPrototype, new Vector3(-3, 0, 0), Quaternion.identity);
-        newAgent.Velocity = new Vector2(1, 0);
-        Agents.Add(newAgent);
-        UpdateCounter();
-
-        newAgent = Instantiate(_boidPrototype, new Vector3(3, 0, 0), Quaternion.identity);
-        newAgent.Velocity = new Vector2(-1, 0);
-        Agents.Add(newAgent);
-        UpdateCounter();
-    }
-
     [ContextMenu("Add 10 Boids")]
     public void AddBoid_10()
     {
