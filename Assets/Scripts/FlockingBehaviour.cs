@@ -11,7 +11,12 @@ public class FlockingBehaviour : MonoBehaviour
     [SerializeField]
     private float _separationRadius;
 
+    [SerializeField]
+    private float _radius = 0.1f;
+
     private Agent2D _agent;
+
+    private List<Agent2D> _nearbyAgents = new List<Agent2D>();
 
     private void Awake()
     {
@@ -46,10 +51,10 @@ public class FlockingBehaviour : MonoBehaviour
             rotationDiff /= 5;
         }
 
-        if(debug)
-        {
-            Debug.Log($"TargetRotation: {targetRotation} | Current: {currentRotation} | diff: {rotationDiff}");
-        }
+        //if(debug)
+        //{
+        //    Debug.Log($"TargetRotation: {targetRotation} | Current: {currentRotation} | diff: {rotationDiff}");
+        //}
 
         return rotationDiff;
     }
@@ -60,6 +65,8 @@ public class FlockingBehaviour : MonoBehaviour
                              .Where(a => (a.Position - _agent.Position).sqrMagnitude < _perceptionRadius * _perceptionRadius)
                              .ToList();
 
+        _nearbyAgents = nearbyAgents;
+
         var v1 = Cohesion(nearbyAgents) * BoidsSpawner.CohesionWeight;
         var v2 = Separation(nearbyAgents) * BoidsSpawner.SeparationWeight;
         var v3 = VelocityMatch(nearbyAgents) * BoidsSpawner.VelocityMatchWeight;
@@ -67,8 +74,9 @@ public class FlockingBehaviour : MonoBehaviour
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         var v4 = Flee(mousePos);
+        var v5 = CollisionAvoidance(nearbyAgents) * 2f * BoidsSpawner.CohesionWeight;
 
-        return (v1 + v2 * 2f + v3 + v4 * 6f) / 4;
+        return (v1 + v2 * 2f + v3 + v4 * 6f + v5) / 5;
     }
 
     private Vector2 Flee(Vector2 mousePos)
@@ -97,6 +105,58 @@ public class FlockingBehaviour : MonoBehaviour
         averagePoint /= agents.Count;
 
         return averagePoint - _agent.Position;
+    }
+
+    public Vector2 CollisionAvoidance(List<Agent2D> agents)
+    {
+        if(agents.Count == 0)
+        {
+            return Vector2.zero;
+        }
+
+        float maxPredictionDistance = 1;
+
+        float timeToCollision = float.MaxValue;
+        Agent2D target = null;
+
+        foreach (var a in agents)
+        {
+            var relativePos = (_agent.Position - a.Position);
+            if(relativePos.sqrMagnitude > maxPredictionDistance * maxPredictionDistance)
+            {
+                continue;
+            }
+
+            var relativeVelocity = (_agent.Velocity - a.Velocity);
+            var estimatedTime = -Vector2.Dot(relativePos, relativeVelocity) / relativeVelocity.sqrMagnitude;
+
+            if (estimatedTime > 0 && estimatedTime < timeToCollision)
+            {
+                target = a;
+                timeToCollision = estimatedTime;
+            }
+        }
+
+        if(target == null)
+        {
+            return Vector2.zero;
+        }
+
+        Vector2 result;
+
+        if(timeToCollision <= 0 || (_agent.Position - target.Position).sqrMagnitude < _radius * _radius)
+        {
+            result = _agent.Position - target.Position;
+        }
+        else
+        {
+            var pos = _agent.Position - target.Position;
+            var vel = _agent.Velocity - target.Velocity;
+
+            result = pos + vel * timeToCollision;
+        }
+
+        return result;
     }
 
     public Vector2 Separation(List<Agent2D> agents)
@@ -146,5 +206,10 @@ public class FlockingBehaviour : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_agent.Position, _separationRadius);
+
+        foreach(var agent in _nearbyAgents)
+        {
+            Gizmos.DrawWireSphere(agent.Position, 0.1f);
+        }
     }
 }

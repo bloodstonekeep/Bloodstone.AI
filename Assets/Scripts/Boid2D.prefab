@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc6167c0d132a5479c2825c4e5b65aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
+  debug: 0
   _perceptionRadius: 1
-  _separationRadius: 1
+  _separationRadius: 0.5
+  _radius: 0.1
