@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class FlockingBehaviour : MonoBehaviour
     private float _separationRadius;
     [SerializeField]
     private float _radius = 0.1f;
+    [SerializeField]
+    private float _avoidance = .5f;
 
     private Agent2D _agent;
 
@@ -20,7 +23,7 @@ public class FlockingBehaviour : MonoBehaviour
 
     public float GetAngularVelocity()
     {
-        if(_agent.Velocity == Vector2.zero)
+        if (_agent.Velocity == Vector2.zero)
         {
             return 0;
         }
@@ -35,12 +38,12 @@ public class FlockingBehaviour : MonoBehaviour
             rotationDiff -= 360;
         }
 
-        while(rotationDiff < -180)
+        while (rotationDiff < -180)
         {
             rotationDiff += 360;
         }
 
-        if(Mathf.Abs(rotationDiff) < 5)
+        if (Mathf.Abs(rotationDiff) < 5)
         {
             rotationDiff /= 5;
         }
@@ -54,22 +57,64 @@ public class FlockingBehaviour : MonoBehaviour
                              .Where(a => (a.Position - _agent.Position).sqrMagnitude < _perceptionRadius * _perceptionRadius)
                              .ToList();
 
-        var v1 = Cohesion(nearbyAgents) * BoidsSpawner.CohesionWeight;
-        var v2 = Separation(nearbyAgents) * BoidsSpawner.SeparationWeight;
-        var v3 = VelocityMatch(nearbyAgents) * BoidsSpawner.VelocityMatchWeight;
+        var v1 = Cohesion(nearbyAgents).normalized * BoidsSpawner.CohesionWeight;
+        var v2 = Separation(nearbyAgents).normalized * BoidsSpawner.SeparationWeight;
+        var v3 = VelocityMatch(nearbyAgents).normalized * BoidsSpawner.VelocityMatchWeight;
 
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        var v4 = Flee(mousePos);
-        var v5 = CollisionAvoidance(nearbyAgents) * 2f * BoidsSpawner.CohesionWeight;
+        var v4 = Flee(mousePos).normalized;
+        var v5 = CollisionAvoidance(nearbyAgents).normalized;
+        var v6 = ObstacleAvoidance().normalized;
 
-        return (v1 + v2 * 2f + v3 + v4 * 6f + v5) / 5;
+        return (v1 + v2 + v3 + v4 * 4f + v5 + v6) / 6;
+    }
+
+    private Vector2 ObstacleAvoidance()
+    {
+        const float angle = Mathf.PI / 3f;
+
+        Debug.DrawLine(_agent.Position, _agent.Position + _agent.Velocity.normalized * _perceptionRadius, Color.yellow);
+        var hit = Physics2D.Raycast(_agent.Position, _agent.Velocity.normalized, _perceptionRadius);
+        if (hit.collider != null)
+        {
+            var targetPos = hit.point + hit.normal * _avoidance;
+            return targetPos - _agent.Position;
+        }
+
+        var cosl = Mathf.Cos(angle);
+        var sinl = Mathf.Sin(angle);
+        var leftDir = new Vector2(cosl * _agent.Velocity.x - sinl * _agent.Velocity.y, sinl * _agent.Velocity.x + cosl * _agent.Velocity.y);
+
+        Debug.DrawLine(_agent.Position, _agent.Position + leftDir.normalized * _perceptionRadius, Color.yellow);
+
+        hit = Physics2D.Raycast(_agent.Position, leftDir.normalized, _perceptionRadius);
+        if (hit.collider != null)
+        {
+            var targetPos = hit.point + hit.normal * _avoidance;
+            return targetPos - _agent.Position;
+        }
+
+        var cosr = Mathf.Cos(-angle);
+        var sinr = Mathf.Sin(-angle);
+        var rightDir = new Vector2(cosr * _agent.Velocity.x - sinr * _agent.Velocity.y, sinr * _agent.Velocity.x + cosr * _agent.Velocity.y);
+
+        Debug.DrawLine(_agent.Position, _agent.Position + rightDir.normalized * _perceptionRadius, Color.yellow);
+
+        hit = Physics2D.Raycast(_agent.Position, rightDir.normalized, _perceptionRadius);
+        if (hit.collider != null)
+        {
+            var targetPos = hit.point + hit.normal * _avoidance;
+            return targetPos - _agent.Position;
+        }
+
+        return Vector2.zero;
     }
 
     private Vector2 Flee(Vector2 mousePos)
     {
         var dist = mousePos - _agent.Position;
-        if(dist.sqrMagnitude < _separationRadius * _separationRadius + 1)
+        if (dist.sqrMagnitude < _separationRadius * _separationRadius + 1)
         {
             return -dist;
         }
@@ -80,7 +125,7 @@ public class FlockingBehaviour : MonoBehaviour
     public Vector2 Cohesion(List<Agent2D> agents)
     {
         Vector2 averagePoint = Vector2.zero;
-        if(agents.Count == 0)
+        if (agents.Count == 0)
         {
             return averagePoint;
         }
@@ -96,7 +141,7 @@ public class FlockingBehaviour : MonoBehaviour
 
     public Vector2 CollisionAvoidance(List<Agent2D> agents)
     {
-        if(agents.Count == 0)
+        if (agents.Count == 0)
         {
             return Vector2.zero;
         }
@@ -109,7 +154,7 @@ public class FlockingBehaviour : MonoBehaviour
         foreach (var a in agents)
         {
             var relativePos = (_agent.Position - a.Position);
-            if(relativePos.sqrMagnitude > maxPredictionDistance * maxPredictionDistance)
+            if (relativePos.sqrMagnitude > maxPredictionDistance * maxPredictionDistance)
             {
                 continue;
             }
@@ -124,14 +169,14 @@ public class FlockingBehaviour : MonoBehaviour
             }
         }
 
-        if(target == null)
+        if (target == null)
         {
             return Vector2.zero;
         }
 
         Vector2 result;
 
-        if(timeToCollision <= 0 || (_agent.Position - target.Position).sqrMagnitude < _radius * _radius)
+        if (timeToCollision <= 0 || (_agent.Position - target.Position).sqrMagnitude < _radius * _radius)
         {
             result = _agent.Position - target.Position;
         }
@@ -154,7 +199,7 @@ public class FlockingBehaviour : MonoBehaviour
         {
             var interpolation = a.Position - _agent.Position;
 
-            if(interpolation.sqrMagnitude < _separationRadius * _separationRadius)
+            if (interpolation.sqrMagnitude < _separationRadius * _separationRadius)
             {
                 separationVector += interpolation * ((_separationRadius * _separationRadius) - interpolation.sqrMagnitude) / _separationRadius * _separationRadius;
                 ++separatedCount;
@@ -173,7 +218,7 @@ public class FlockingBehaviour : MonoBehaviour
     {
         Vector2 averageDirection = Vector2.zero;
 
-        if(nearbyBoids.Count == 0)
+        if (nearbyBoids.Count == 0)
         {
             return averageDirection;
         }
