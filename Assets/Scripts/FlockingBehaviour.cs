@@ -74,12 +74,14 @@ public class FlockingBehaviour : MonoBehaviour
     {
         const float angle = Mathf.PI / 3f;
 
+        Vector2 result = Vector2.zero;
+
         Debug.DrawLine(_agent.Position, _agent.Position + _agent.Velocity.normalized * _perceptionRadius, Color.yellow);
         var hit = Physics2D.Raycast(_agent.Position, _agent.Velocity.normalized, _perceptionRadius);
         if (hit.collider != null)
         {
             var targetPos = hit.point + hit.normal * _avoidance;
-            return targetPos - _agent.Position;
+            result += targetPos - _agent.Position;
         }
 
         var cosl = Mathf.Cos(angle);
@@ -92,7 +94,7 @@ public class FlockingBehaviour : MonoBehaviour
         if (hit.collider != null)
         {
             var targetPos = hit.point + hit.normal * _avoidance;
-            return targetPos - _agent.Position;
+            result += targetPos - _agent.Position;
         }
 
         var cosr = Mathf.Cos(-angle);
@@ -105,10 +107,10 @@ public class FlockingBehaviour : MonoBehaviour
         if (hit.collider != null)
         {
             var targetPos = hit.point + hit.normal * _avoidance;
-            return targetPos - _agent.Position;
+            result += targetPos - _agent.Position;
         }
 
-        return Vector2.zero;
+        return result;
     }
 
     private Vector2 Flee(Vector2 mousePos)
