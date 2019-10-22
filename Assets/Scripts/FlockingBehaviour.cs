@@ -67,7 +67,7 @@ public class FlockingBehaviour : MonoBehaviour
         var v5 = CollisionAvoidance(nearbyAgents).normalized * 2f;
         var v6 = ObstacleAvoidance().normalized * 2f;
 
-        return (v1 + v2 + v3 + v4 * 4f + v5 + v6) / 6;
+        return (v1 + v2 + v3 + v4 * 2f + v5 + v6) / 6;
     }
 
     private Vector2 ObstacleAvoidance()
