@@ -77,7 +77,7 @@ namespace Bloodstone.AI
 
             Vector2 result = Vector2.zero;
 
-            Debug.DrawLine(agent.Position, agent.Position + agent.Velocity.normalized * _perceptionRadius, Color.yellow);
+            //Debug.DrawLine(agent.Position, agent.Position + agent.Velocity.normalized * _perceptionRadius, Color.yellow);
             var hit = Physics2D.Raycast(agent.Position, agent.Velocity.normalized, _perceptionRadius);
             if (hit.collider != null)
             {
@@ -89,7 +89,7 @@ namespace Bloodstone.AI
             var sinl = Mathf.Sin(angle);
             var leftDir = new Vector2(cosl * agent.Velocity.x - sinl * agent.Velocity.y, sinl * agent.Velocity.x + cosl * agent.Velocity.y);
 
-            Debug.DrawLine(agent.Position, agent.Position + leftDir.normalized * _perceptionRadius, Color.yellow);
+            //Debug.DrawLine(agent.Position, agent.Position + leftDir.normalized * _perceptionRadius, Color.yellow);
 
             hit = Physics2D.Raycast(agent.Position, leftDir.normalized, _perceptionRadius);
             if (hit.collider != null)
@@ -102,7 +102,7 @@ namespace Bloodstone.AI
             var sinr = Mathf.Sin(-angle);
             var rightDir = new Vector2(cosr * agent.Velocity.x - sinr * agent.Velocity.y, sinr * agent.Velocity.x + cosr * agent.Velocity.y);
 
-            Debug.DrawLine(agent.Position, agent.Position + rightDir.normalized * _perceptionRadius, Color.yellow);
+            //Debug.DrawLine(agent.Position, agent.Position + rightDir.normalized * _perceptionRadius, Color.yellow);
 
             hit = Physics2D.Raycast(agent.Position, rightDir.normalized, _perceptionRadius);
             if (hit.collider != null)
