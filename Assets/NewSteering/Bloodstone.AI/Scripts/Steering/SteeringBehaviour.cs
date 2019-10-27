@@ -11,14 +11,14 @@ namespace Bloodstone.AI.Steering
         protected bool showGizmos;
 
         protected AISubsystem subsystem;
-        private Agent _agent;
-        protected Agent Agent => _agent;
+
+        protected Agent Agent { get; private set; }
 
         public abstract Vector3 GetSteering();
 
         protected virtual void Awake()
         {
-            _agent = GetComponent<Agent>();
+            Agent = GetComponent<Agent>();
             subsystem = GetComponent<AISubsystem>();
         }
 
