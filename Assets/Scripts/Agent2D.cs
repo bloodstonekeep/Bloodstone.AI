@@ -2,7 +2,6 @@
 
 namespace Bloodstone.AI
 {
-
     public class Agent2D : MonoBehaviour
     {
         public float MaxSpeed = 0.5f;

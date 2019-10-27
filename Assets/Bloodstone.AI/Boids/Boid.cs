@@ -14,5 +14,10 @@ namespace Bloodstone.AI.Boids
         {
             throw new System.NotImplementedException();
         }
+
+        public SteeringPrediction GetSteeringPrediction()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

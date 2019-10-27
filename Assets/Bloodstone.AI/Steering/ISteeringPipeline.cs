@@ -2,5 +2,6 @@
 {
     public interface ISteeringPipeline
     {
+        SteeringPrediction GetSteeringPrediction();
     }
 }
