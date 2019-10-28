@@ -7,14 +7,17 @@ namespace Bloodstone.AI.Steering
     [RequireComponent(typeof(AISubsystem))]
     public class SteeringPipeline : MonoBehaviour, ISteeringPipeline
     {
-        [SerializeField]
         private AISubsystem _subsystem;
-        private Agent _agent;
 
         [SerializeField]
         private List<WeightedMovement> _movement;
         [SerializeField]
         private List<WeightedRotation> _rotation;
+
+        private void Awake()
+        {
+            _subsystem = GetComponent<AISubsystem>();
+        }
 
         private void OnEnable()
         {

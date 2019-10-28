@@ -8,7 +8,7 @@ namespace Bloodstone.AI.Steering
 
         public override Vector3 GetSteering()
         {
-            return (TargetPosition - Agent.Position).normalized * Agent.Statistics.MaximumSpeed;
+            return TargetPosition - Agent.Position;
         }
 
         protected override void DrawGizmos()
