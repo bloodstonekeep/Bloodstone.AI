@@ -191,6 +191,8 @@ GameObject:
   - component: {fileID: 6960810868787465336}
   - component: {fileID: 6960810868787465338}
   - component: {fileID: 6960810868787465339}
+  - component: {fileID: 8423553956095184092}
+  - component: {fileID: 1848317136638337246}
   - component: {fileID: 7579791402746979065}
   m_Layer: 0
   m_Name: AI Agent
@@ -268,6 +270,10 @@ MonoBehaviour:
     _weight: 1
   - _behaviour: {fileID: 6960810868787465339}
     _weight: 0.5
+  - _behaviour: {fileID: 8423553956095184092}
+    _weight: 2
+  - _behaviour: {fileID: 1848317136638337246}
+    _weight: 2
   _rotation:
   - _behaviour: {fileID: 7579791402746979065}
     _weight: 1
@@ -312,6 +318,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showGizmos: 0
+--- !u!114 &8423553956095184092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6960810869012465474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c74d0d739ff47ec43862ea50272a7632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showGizmos: 0
+  Radius: 0.2
+--- !u!114 &1848317136638337246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6960810869012465474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56ad07a765cf11f408b5a4a3ce6c162a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showGizmos: 0
+  PerceptionRadius: 1
+  _avoidance: 0.5
 --- !u!114 &7579791402746979065
 MonoBehaviour:
   m_ObjectHideFlags: 0
