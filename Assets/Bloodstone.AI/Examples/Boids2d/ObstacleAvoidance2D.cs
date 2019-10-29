@@ -1,30 +1,37 @@
 ﻿using System;
 using UnityEngine;
+using Bloodstone.AI.Steering;
 
-namespace Bloodstone.AI.Steering
+namespace Bloodstone.AI.Examples.Boids
 {
-    public class ObstacleAvoidance : LocalAwarenessMovement
+    public class ObstacleAvoidance2D : LocalAwarenessMovement
     {
         public float PerceptionRadius = 1f;
 
         [SerializeField]
         protected float _avoidance = .5f;
 
+        [SerializeField]
+        private float _sensorsAngle = Mathf.PI / 3f;
+
+        // todo: read only
+        // todo: struct
+        [SerializeField]
+        private float _leftSensorCos;
+        [SerializeField]
+        private float _leftSensorSin;
+        [SerializeField]
+        private float _rightSensorCos;
+        [SerializeField]
+        private float _rightSensorSin;
+
         public override Vector3 GetSteering()
         {
-            // todo: move constraint: cos, sin
-            const float angle = Mathf.PI / 3f;
-
             Vector3 result = Vector3.zero;
+
             var forward = Agent.Velocity;
-
-            var cosl = Mathf.Cos(angle);
-            var sinl = Mathf.Sin(angle);
-            var leftDir = new Vector2(cosl * Agent.Velocity.x - sinl * Agent.Velocity.y, sinl * Agent.Velocity.x + cosl * Agent.Velocity.y);
-
-            var cosr = Mathf.Cos(-angle);
-            var sinr = Mathf.Sin(-angle);
-            var rightDir = new Vector2(cosr * Agent.Velocity.x - sinr * Agent.Velocity.y, sinr * Agent.Velocity.x + cosr * Agent.Velocity.y);
+            var leftDir = new Vector2(_leftSensorCos * Agent.Velocity.x - _leftSensorSin * Agent.Velocity.y, _leftSensorSin * Agent.Velocity.x + _leftSensorCos * Agent.Velocity.y);
+            var rightDir = new Vector2(_rightSensorCos * Agent.Velocity.x - _rightSensorSin * Agent.Velocity.y, _rightSensorSin * Agent.Velocity.x + _rightSensorCos * Agent.Velocity.y);
 
             result += Raycast(forward);
             result += Raycast(leftDir);
@@ -59,6 +66,15 @@ namespace Bloodstone.AI.Steering
             }
 
             return Vector3.zero;
+        }
+
+        private void OnValidate()
+        {
+            _leftSensorCos = Mathf.Cos(_sensorsAngle);
+            _leftSensorSin = Mathf.Sin(_sensorsAngle);
+
+            _rightSensorCos = Mathf.Cos(-_sensorsAngle);
+            _rightSensorSin = Mathf.Sin(-_sensorsAngle);
         }
     }
 }
