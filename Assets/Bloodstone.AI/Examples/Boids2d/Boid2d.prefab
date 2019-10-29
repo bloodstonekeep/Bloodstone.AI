@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 6960810869012465469}
   - component: {fileID: 4062446911622647796}
   - component: {fileID: 3269810303092030192}
-  - component: {fileID: 6960810868787465343}
+  - component: {fileID: 6672586108734233299}
   - component: {fileID: 6960810868787465336}
   - component: {fileID: 6960810868787465338}
   - component: {fileID: 6960810868787465339}
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _predictionRange: 1
   _agent: {fileID: 4062446911622647796}
---- !u!114 &6960810868787465343
+--- !u!114 &6672586108734233299
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -179,25 +179,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 6960810869012465474}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 244c1627cbd1710429c31065b03a48db, type: 3}
+  m_Script: {fileID: 11500000, guid: c26651d4a0c26994ca010100b8235982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _movement:
-  - _behaviour: {fileID: 6960810868787465336}
-    _weight: 1
-  - _behaviour: {fileID: 6960810868787465338}
-    _weight: 2
-  - _behaviour: {fileID: 6960810868787465339}
-    _weight: 0.7
-  - _behaviour: {fileID: 8423553956095184092}
-    _weight: 2
   - _behaviour: {fileID: 1848317136638337246}
     _weight: 2
   - _behaviour: {fileID: 1573308665451634283}
-    _weight: 2
-  _rotation:
-  - _behaviour: {fileID: 7579791402746979065}
-    _weight: 1
+    _weight: 1.5
+  _rotation: []
+  _weights: {fileID: 11400000, guid: c301a23ac32588649b956fb7ba62f069, type: 2}
+  _cohesionSteering: {fileID: 6960810868787465339}
+  _separationSteering: {fileID: 6960810868787465338}
+  _velocityMatchSteering: {fileID: 6960810868787465336}
+  _collisionAvoidanceSteering: {fileID: 8423553956095184092}
 --- !u!114 &6960810868787465336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +263,11 @@ MonoBehaviour:
   showGizmos: 0
   PerceptionRadius: 1.5
   _avoidance: 1
+  _sensorsAngle: 1.0471976
+  _leftSensorCos: 0.49999997
+  _leftSensorSin: 0.86602545
+  _rightSensorCos: 0.49999997
+  _rightSensorSin: -0.86602545
 --- !u!114 &7579791402746979065
 MonoBehaviour:
   m_ObjectHideFlags: 0

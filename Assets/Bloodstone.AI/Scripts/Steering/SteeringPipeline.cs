@@ -14,7 +14,7 @@ namespace Bloodstone.AI.Steering
         [SerializeField]
         private List<WeightedRotation> _rotation;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _subsystem = GetComponent<AISubsystem>();
         }
@@ -29,12 +29,12 @@ namespace Bloodstone.AI.Steering
             _subsystem.Remove(this);
         }
 
-        public Vector3 MovementSteering()
+        public virtual Vector3 MovementSteering()
         {
             return BlendSteerings<WeightedMovement, MovementSteering>(_movement);
         }
 
-        public Vector3 RotationSteering()
+        public virtual Vector3 RotationSteering()
         {
             return BlendSteerings<WeightedRotation, RotationSteering>(_rotation);
         }
