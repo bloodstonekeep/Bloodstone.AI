@@ -8,6 +8,10 @@ namespace Bloodstone.AI.Examples.Boids
     {
         public float PerceptionRadius = 1f;
 
+        // todo: drawer
+        [SerializeField]
+        private int _obstacleLayer = 1 << 8;
+
         [SerializeField]
         protected float _avoidance = .5f;
 
@@ -58,8 +62,11 @@ namespace Bloodstone.AI.Examples.Boids
         private Vector3 Raycast_XY(Vector3 direction)
         {
             //Debug.DrawLine(Agent.Position, Agent.Position + direction.normalized * PerceptionRadius, Color.yellow);
-            var hit = Physics2D.Raycast(Agent.Position, direction.normalized, PerceptionRadius);
-            if (hit.collider != null)
+            var hit = Physics2D.Raycast(Agent.Position, direction.normalized, PerceptionRadius, _obstacleLayer);
+            var collider = hit.collider;
+
+            if (collider != null 
+                && !collider.isTrigger)
             {
                 var targetPos = hit.point + hit.normal * _avoidance;
                 return targetPos.ToVector3() - Agent.Position;
