@@ -41,30 +41,48 @@ namespace Bloodstone.AI.Examples.Boids
 
         private void BottomTriggerOccuredEvent(Transform targetTransform)
         {
+            targetTransform.gameObject.SetActive(false);
+
             var newPosition = targetTransform.position;
             newPosition.y = _topTrigger.transform.position.y - _topTrigger.transform.localScale.y;
             targetTransform.position = newPosition;
+
+            targetTransform.gameObject.SetActive(true);
+
         }
 
         private void RightTriggerOccuredEvent(Transform targetTransform)
         {
+            targetTransform.gameObject.SetActive(false);
+
             var newPosition = targetTransform.position;
             newPosition.x = _leftTrigger.transform.position.x + _leftTrigger.transform.localScale.x;
             targetTransform.position = newPosition;
+
+            targetTransform.gameObject.SetActive(true);
+
         }
 
         private void LeftTriggerOccuredEvent(Transform targetTransform)
         {
+            targetTransform.gameObject.SetActive(false);
+
             var newPosition = targetTransform.position;
             newPosition.x = _rightTrigger.transform.position.x - _rightTrigger.transform.localScale.x;
             targetTransform.position = newPosition;
+
+            targetTransform.gameObject.SetActive(true);
         }
 
         private void TopTriggerOccuredEvent(Transform targetTransform)
         {
+            targetTransform.gameObject.SetActive(false);
+
             var newPosition = targetTransform.position;
             newPosition.y = _bottomTrigger.transform.position.y + _bottomTrigger.transform.localScale.y;
             targetTransform.position = newPosition;
+
+            targetTransform.gameObject.SetActive(true);
         }
     }
 }
