@@ -12,41 +12,42 @@ namespace Bloodstone.AI.Examples.Boids
         [SerializeField]
         private BoundsController _bounds;
 
-        private List<Agent> _agents = new List<Agent>();
-        private Dictionary<Agent, AISubsystem> _subsystems = new Dictionary<Agent, AISubsystem>();
+        private List<Boid> _boids = new List<Boid>();
+        private Dictionary<Boid, AISubsystem> _subsystems = new Dictionary<Boid, AISubsystem>();
 
         private void Update()
         {
-            foreach(var agent in _agents)
+            foreach(var boid in _boids)
             {
-                _subsystems[agent].Neighborhood = _agents.Where(a => a != agent)
-                                                    .Where(a => (a.transform.position - agent.transform.position).sqrMagnitude < agent.PredictionRange * agent.PredictionRange)
-                                                    .ToList();
+                _subsystems[boid].Neighborhood = _boids.Where(a => a != boid)
+                                                        .Select(b => b.Agent)
+                                                        .Where(a => (a.transform.position - boid.Agent.Position).sqrMagnitude < boid.Agent.PredictionRange * boid.Agent.PredictionRange)
+                                                        .ToList();
             }
         }
 
         public void RemoveBoid()
         {
-            if(_agents.Count == 0)
+            if(_boids.Count == 0)
             {
                 return;
             }
 
-            var lastIndex = _agents.Count - 1;
-            var agent = _agents[lastIndex];
+            var lastIndex = _boids.Count - 1;
+            var boid = _boids[lastIndex];
 
-            _subsystems.Remove(agent);
-            _agents.RemoveAt(lastIndex);
+            _subsystems.Remove(boid);
+            _boids.RemoveAt(lastIndex);
 
-            Destroy(agent.transform.parent.gameObject);
+            boid.Die();
         }
 
         public void AddBoid()
         {
-            var (agent, system) = _boidsFactory.CreateNewBoid();
+            var (boid, system) = _boidsFactory.CreateNewBoid();
 
-            _agents.Add(agent);
-            _subsystems[agent] = system;
+            _boids.Add(boid);
+            _subsystems[boid] = system;
         }
 
         public void SwitchBorderMode(bool value)

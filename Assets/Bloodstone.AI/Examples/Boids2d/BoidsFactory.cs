@@ -9,9 +9,9 @@ namespace Bloodstone.AI.Examples.Boids
         private Transform _boidsParent;
 
         [SerializeField]
-        private GameObject _boidPrototype;
+        private Boid _boidPrototype;
 
-        public (Agent agent, AISubsystem subsystem) CreateNewBoid()
+        public (Boid boid, AISubsystem subsystem) CreateNewBoid()
         {
             var newBoid = Instantiate(_boidPrototype, new Vector3(Random.value * 10, Random.value * 5, 0), Quaternion.identity, _boidsParent);
             var agent = newBoid.GetComponentInChildren<Agent>();
@@ -21,7 +21,7 @@ namespace Bloodstone.AI.Examples.Boids
             };
 
             var subsystem = newBoid.GetComponentInChildren<AISubsystem>();
-            return (agent, subsystem);
+            return (newBoid, subsystem);
         }
 
         private Vector2 RandomVector2()
