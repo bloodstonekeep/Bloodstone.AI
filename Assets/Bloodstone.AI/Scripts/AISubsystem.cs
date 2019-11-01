@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Bloodstone.AI.Steering;
 using UnityEngine;
 
@@ -8,8 +7,6 @@ namespace Bloodstone.AI
     [ExecuteAlways]
     sealed public class AISubsystem : MonoBehaviour
     {
-        [SerializeField]
-        private float _predictionRange = 1f;
         [SerializeField]
         private Agent _agent;
 
@@ -30,10 +27,6 @@ namespace Bloodstone.AI
 
         public void Update()
         {
-            Neighborhood = FindObjectsOfType<Agent>().Where(a => a != _agent)
-                                            .Where(a => (a.transform.position - _agent.transform.position).sqrMagnitude < _predictionRange * _predictionRange)
-                                            .ToList();
-
             var newSteering = new SteeringPrediction();
 
             foreach (var pipeline in _agentsPipelines)

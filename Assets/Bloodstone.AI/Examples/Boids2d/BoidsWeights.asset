@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BoidsWeights
   m_EditorClassIdentifier: 
   Cohesion: 0.7
-  Separation: 1
+  Separation: 2
   VelocityMatch: 0.7
   CollisionAvoidance: 2

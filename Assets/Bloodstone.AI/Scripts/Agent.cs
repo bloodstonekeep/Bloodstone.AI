@@ -5,6 +5,11 @@ namespace Bloodstone.AI
     public class Agent : MonoBehaviour
     {
         [SerializeField]
+        private float _predictionRange = 1f;
+
+        public float PredictionRange => _predictionRange;
+
+        [SerializeField]
         private WorldOrientation _worldOrientation;
 
         [SerializeField]

@@ -11,8 +11,7 @@ namespace Bloodstone.AI.Examples.Boids
         [SerializeField]
         private GameObject _boidPrototype;
 
-        [ContextMenu("Add Boid")]
-        public void AddBoid()
+        public (Agent agent, AISubsystem subsystem) CreateNewBoid()
         {
             var newBoid = Instantiate(_boidPrototype, new Vector3(Random.value * 10, Random.value * 5, 0), Quaternion.identity, _boidsParent);
             var agent = newBoid.GetComponentInChildren<Agent>();
@@ -20,18 +19,12 @@ namespace Bloodstone.AI.Examples.Boids
             {
                 Velocity = RandomVector2()
             };
+
+            var subsystem = newBoid.GetComponentInChildren<AISubsystem>();
+            return (agent, subsystem);
         }
 
-        [ContextMenu("Add Boid 10")]
-        public void AddBoid_10()
-        {
-            for (int i = 0; i < 10; ++i)
-            {
-                AddBoid();
-            }
-        }
-
-        public Vector2 RandomVector2()
+        private Vector2 RandomVector2()
         {
             return new Vector2(Random.value, Random.value);
         }
@@ -39,7 +32,8 @@ namespace Bloodstone.AI.Examples.Boids
         private void OnValidate()
         {
             if (_boidPrototype != null
-                && !_boidPrototype.GetComponentInChildren<Agent>())
+                && !_boidPrototype.GetComponentInChildren<Agent>()
+                && !_boidPrototype.GetComponentInChildren<AISubsystem>())
             {
                 _boidPrototype = null;
             }
