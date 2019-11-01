@@ -4,12 +4,19 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using UnityEngine.Events;
 using System;
+using TMPro;
 
 namespace Bloodstone.UI
 {
     public class Switch : MonoBehaviour, IPointerDownHandler
     {
-        public Text TextUnder;
+        [SerializeField]
+        private TMP_Text _optionLabel;
+
+        [SerializeField]
+        private string _onLabel;
+        [SerializeField]
+        private string _offLabel;
 
         [Header("Color settings")]
         public Color fillColor = Color.white;
@@ -70,6 +77,8 @@ namespace Bloodstone.UI
 
 
             IsOn = true;
+            _optionLabel.text = _onLabel;
+            _onSwitchEvent.Invoke(IsOn);
         }
 
         private void TurnOff()
@@ -78,6 +87,8 @@ namespace Bloodstone.UI
             StartCoroutine(SwitchMode(handleColorOn, handleColorOff, _slider.maxValue, _slider.minValue));
 
             IsOn = false;
+            _optionLabel.text = _offLabel;
+            _onSwitchEvent.Invoke(IsOn);
         }
 
         public void SwitchMode()

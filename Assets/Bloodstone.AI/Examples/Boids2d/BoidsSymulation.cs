@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ namespace Bloodstone.AI.Examples.Boids
     {
         [SerializeField]
         private BoidsFactory _boidsFactory;
+        [SerializeField]
+        private BoundsController _bounds;
 
         private List<Agent> _agents = new List<Agent>();
         private Dictionary<Agent, AISubsystem> _subsystems = new Dictionary<Agent, AISubsystem>();
@@ -44,6 +47,12 @@ namespace Bloodstone.AI.Examples.Boids
 
             _agents.Add(agent);
             _subsystems[agent] = system;
+        }
+
+        public void SwitchBorderMode(bool value)
+        {
+            var newMode = _bounds.ParseMode(value);
+            _bounds.Mode = newMode;
         }
     }
 }

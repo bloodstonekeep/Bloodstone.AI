@@ -53,8 +53,9 @@ namespace Bloodstone.AI.Examples.Boids.UI
             }
         }
 
-        public void BorderSwitch(bool value)
+        public void SwitchBorderMode(bool value)
         {
+            _boidsSymulation.SwitchBorderMode(value);
         }
 
         public void Show()
