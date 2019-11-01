@@ -1,4 +1,5 @@
 ﻿using Bloodstone.AI.Steering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Bloodstone.AI.Examples.Boids
 {
     public class BoidSteeringPipeline : SteeringPipeline
     {
-        private readonly Dictionary<ISteeringBehaviour, float> _weightsDictionary = new Dictionary<ISteeringBehaviour, float>();
+        private readonly Dictionary<ISteeringBehaviour, Func<float>> _weightsDictionary = new Dictionary<ISteeringBehaviour, Func<float>>();
         private List<ISteeringBehaviour> _steeringBehaviours;
 
         [SerializeField]
@@ -31,10 +32,10 @@ namespace Bloodstone.AI.Examples.Boids
 
         private void RegisterSteerings()
         {
-            _weightsDictionary[_cohesionSteering] = _weights.Cohesion;
-            _weightsDictionary[_separationSteering] = _weights.Separation;
-            _weightsDictionary[_velocityMatchSteering] = _weights.VelocityMatch;
-            _weightsDictionary[_collisionAvoidanceSteering] = _weights.CollisionAvoidance;
+            _weightsDictionary[_cohesionSteering] = () => _weights.Cohesion;
+            _weightsDictionary[_separationSteering] = () => _weights.Separation;
+            _weightsDictionary[_velocityMatchSteering] = () => _weights.VelocityMatch;
+            _weightsDictionary[_collisionAvoidanceSteering] = () => _weights.CollisionAvoidance;
 
             _steeringBehaviours = _weightsDictionary.Keys.ToList();
         }
@@ -45,7 +46,11 @@ namespace Bloodstone.AI.Examples.Boids
 
             foreach(var steering in _steeringBehaviours)
             {
-                boidResult += steering.GetSteering() * _weightsDictionary[steering];
+                var weight = _weightsDictionary[steering]?.Invoke();
+                if(weight.HasValue)
+                {
+                    boidResult += steering.GetSteering() * weight.Value;
+                }
             }
 
             boidResult /= _steeringBehaviours.Count;

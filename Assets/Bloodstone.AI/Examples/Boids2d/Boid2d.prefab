@@ -196,6 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c17cd3ca11e454696a7bfa853b6e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _predictionRange: 1
   _worldOrientation: 0
   _velocity: {x: 0, y: 0, z: 0}
   _angularVelocity: {x: 0, y: 0, z: 0}
@@ -217,7 +218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 376ab5719c7581b4a93135b40b70c385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _predictionRange: 1
   _agent: {fileID: 4062446911622647796}
 --- !u!114 &6672586108734233299
 MonoBehaviour:
@@ -312,7 +312,7 @@ MonoBehaviour:
   showGizmos: 0
   PerceptionRadius: 1.5
   _obstacleLayer: 256
-  _avoidance: 1
+  _avoidance: 0.75
   _sensorsAngle: 1.0471976
   _leftSensorCos: 0.49999997
   _leftSensorSin: 0.86602545
