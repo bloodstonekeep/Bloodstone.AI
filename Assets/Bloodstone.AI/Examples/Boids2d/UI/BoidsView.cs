@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bloodstone.AI.Examples.Boids.UI;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,9 +11,9 @@ namespace Bloodstone.AI.Examples.Boids
         private BoidSteeringWeights _weight;
 
         [SerializeField]
-        private GameObject _togglablePanel;
+        private CanvasFader _settingsFader;
         [SerializeField]
-        private GameObject _showButton;
+        private CanvasFader _showButtonFader;
 
         [Space(5)]
 
@@ -38,14 +39,14 @@ namespace Bloodstone.AI.Examples.Boids
 
         internal void Hide()
         {
-            _togglablePanel.SetActive(false);
-            _showButton.SetActive(true);
+            _settingsFader.Hide();
+            _showButtonFader.Show();
         }
 
         internal void Show()
         {
-            _togglablePanel.SetActive(true);
-            _showButton.SetActive(false);
+            _settingsFader.Show();
+            _showButtonFader.Hide();
         }
     }
 }
