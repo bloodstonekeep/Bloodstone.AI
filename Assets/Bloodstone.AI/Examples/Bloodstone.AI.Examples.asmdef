@@ -1,7 +1,8 @@
 {
     "name": "Bloodstone.AI.Examples",
     "references": [
-        "GUID:11c4cb39d74a1ad44b670fe18f545c16"
+        "GUID:11c4cb39d74a1ad44b670fe18f545c16",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -10,6 +11,5 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+    "versionDefines": []
 }
