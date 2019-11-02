@@ -9799,12 +9799,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _predictionRange: 1
-  _worldOrientation: 0
-  _velocity: {x: 0, y: 0, z: 0}
-  _angularVelocity: {x: 0, y: 0, z: 0}
   _statistics:
     _maximumSpeed: 1
     _maximumAngularSpeed: 100
+  _worldOrientation: 0
   _prediction:
     Velocity: {x: 0, y: 0, z: 0}
     AngularVelocity: {x: 0, y: 0, z: 0}

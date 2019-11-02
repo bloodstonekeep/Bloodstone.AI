@@ -1,0 +1,17 @@
+{
+    "name": "Bloodstone.AIEditor",
+    "autoReferenced": true,
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "references": [
+        "GUID:11c4cb39d74a1ad44b670fe18f545c16"
+    ],
+    "versionDefines": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "defineConstraints": [],
+    "precompiledReferences": [],
+    "optionalUnityReferences": []
+}

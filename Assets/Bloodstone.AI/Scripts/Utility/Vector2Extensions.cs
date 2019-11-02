@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Bloodstone
+namespace Bloodstone.AI.Utility
 {
     public static class Vector2Extensions
     {

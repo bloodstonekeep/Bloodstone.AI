@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using Bloodstone.AI.Steering;
+using Bloodstone.AI.Utility;
 
 namespace Bloodstone.AI.Examples.Boids
 {
