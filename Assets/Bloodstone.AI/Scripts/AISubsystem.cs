@@ -12,7 +12,7 @@ namespace Bloodstone.AI
 
         private List<ISteeringPipeline> _agentsPipelines = new List<ISteeringPipeline>();
 
-        public List<Agent> Neighborhood { get; set; }
+        public List<Agent> Neighborhood { get; set; } = new List<Agent>();
         public Agent Agent => _agent;
 
         public void Add(ISteeringPipeline steeringPipeline)

@@ -35,6 +35,7 @@ namespace Bloodstone.AI.Examples.Boids
 
         private void Start()
         {
+            _animator.keepAnimatorControllerStateOnDisable = true;
             _animator.Play(_spawnAnimationHash);
         }
     }

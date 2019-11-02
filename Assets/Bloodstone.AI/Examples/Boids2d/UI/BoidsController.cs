@@ -17,6 +17,11 @@ namespace Bloodstone.AI.Examples.Boids.UI
         [SerializeField]
         private BoidSteeringWeights _weight;
 
+        public void ApplicationQuit()
+        {
+            Application.Quit();
+        }
+
         public void SetBoidsCohesion(float value)
         {
             _weight.Cohesion = value;

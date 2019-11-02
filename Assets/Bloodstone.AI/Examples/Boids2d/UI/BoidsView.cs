@@ -13,7 +13,7 @@ namespace Bloodstone.AI.Examples.Boids
         [SerializeField]
         private CanvasFader _settingsFader;
         [SerializeField]
-        private CanvasFader _showButtonFader;
+        private CanvasFader _inGameFader;
 
         [Space(5)]
 
@@ -40,13 +40,13 @@ namespace Bloodstone.AI.Examples.Boids
         internal void Hide()
         {
             _settingsFader.Hide();
-            _showButtonFader.Show();
+            _inGameFader.Show();
         }
 
         internal void Show()
         {
             _settingsFader.Show();
-            _showButtonFader.Hide();
+            _inGameFader.Hide();
         }
     }
 }
