@@ -11,7 +11,7 @@ namespace Bloodstone.AI.Steering.Movement
                 return Vector3.zero;
             }
 
-            Vector3 averagePosition = GetAverageNeightborsPosition();
+            var averagePosition = GetAverageNeightborsPosition();
 
             return averagePosition - Agent.Position;
         }
