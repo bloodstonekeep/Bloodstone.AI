@@ -7,45 +7,46 @@ namespace Bloodstone.AI.Examples.Boids
 {
     public class ObstacleAvoidance2D : LocalAwarenessMovement
     {
-        public float PerceptionRadius = 1f;
+        private const int SensorsCount = 3;
 
-        // todo: drawer
+        [LayerIndex]
         [SerializeField]
-        private int _obstacleLayer = 1 << 8;
+        private int _obstacleLayerIndex = 1 << 8;
+
+        [Range(0, Mathf.PI)]
+        [SerializeField]
+        [Tooltip("Angle (in radians) between sensors")]
+        private float _subsensorsAngle = Mathf.PI / 3f;
 
         [SerializeField]
-        protected float _avoidance = .5f;
+        protected float avoidanceDistance = .5f;
 
-        [SerializeField]
-        private float _sensorsAngle = Mathf.PI / 3f;
-
-        // todo: read only
-        // todo: struct
-        [SerializeField]
-        private float _leftSensorCos;
-        [SerializeField]
-        private float _leftSensorSin;
-        [SerializeField]
-        private float _rightSensorCos;
-        [SerializeField]
-        private float _rightSensorSin;
+        private readonly SensorsData _sensorsData = new SensorsData();
 
         public override Vector3 GetSteering()
         {
             Vector3 result = Vector3.zero;
 
-            var forward = Agent.Velocity;
-            var leftDir = new Vector2(_leftSensorCos * Agent.Velocity.x - _leftSensorSin * Agent.Velocity.y, _leftSensorSin * Agent.Velocity.x + _leftSensorCos * Agent.Velocity.y);
-            var rightDir = new Vector2(_rightSensorCos * Agent.Velocity.x - _rightSensorSin * Agent.Velocity.y, _rightSensorSin * Agent.Velocity.x + _rightSensorCos * Agent.Velocity.y);
+            Vector2 forward = Agent.Velocity;
+            result += SensorRaycast(forward);
 
-            result += Raycast(forward);
-            result += Raycast(leftDir);
-            result += Raycast(rightDir);
+            var leftDir = forward.Rotate(_sensorsData.LeftSubsensorSin, _sensorsData.LeftSubsensorCos);
+            result += SensorRaycast(leftDir);
+
+            var rightDir = forward.Rotate(_sensorsData.RightSubsensorSin, _sensorsData.RightSubsensorCos);
+            result += SensorRaycast(rightDir);
 
             return result;
         }
 
-        private Vector3 Raycast(Vector3 direction)
+        protected override void Awake()
+        {
+            base.Awake();
+
+            _sensorsData.UpdateAngle(_subsensorsAngle);
+        }
+
+        private Vector3 SensorRaycast(Vector3 direction)
         {
             switch (Agent.WorldOrientation)
             {
@@ -62,15 +63,14 @@ namespace Bloodstone.AI.Examples.Boids
 
         private Vector3 Raycast_XY(Vector3 direction)
         {
-            //Debug.DrawLine(Agent.Position, Agent.Position + direction.normalized * PerceptionRadius, Color.yellow);
-            var hit = Physics2D.Raycast(Agent.Position, direction.normalized, PerceptionRadius, _obstacleLayer);
+            var hit = Physics2D.Raycast(Agent.Position, direction.normalized, Agent.PredictionRange, 1 << _obstacleLayerIndex);
             var collider = hit.collider;
 
-            if (collider != null 
+            if (collider != null
                 && !collider.isTrigger)
             {
-                var targetPos = hit.point + hit.normal * _avoidance;
-                return targetPos.ToVector3() - Agent.Position;
+                var targetPosition = hit.point + hit.normal * avoidanceDistance;
+                return targetPosition.ToVector3() - Agent.Position;
             }
 
             return Vector3.zero;
@@ -78,11 +78,25 @@ namespace Bloodstone.AI.Examples.Boids
 
         private void OnValidate()
         {
-            _leftSensorCos = Mathf.Cos(_sensorsAngle);
-            _leftSensorSin = Mathf.Sin(_sensorsAngle);
+            _sensorsData.UpdateAngle(_subsensorsAngle);
+        }
 
-            _rightSensorCos = Mathf.Cos(-_sensorsAngle);
-            _rightSensorSin = Mathf.Sin(-_sensorsAngle);
+        private class SensorsData
+        {
+            public void UpdateAngle(float angle)
+            {
+                var cosinusOfAngle = Mathf.Cos(angle);
+                LeftSubsensorCos = cosinusOfAngle;
+                RightSubsensorCos = cosinusOfAngle;
+
+                LeftSubsensorSin = Mathf.Sin(angle);
+                RightSubsensorSin = Mathf.Sin(-angle);
+            }
+
+            public float LeftSubsensorCos { get; private set; }
+            public float LeftSubsensorSin { get; private set; }
+            public float RightSubsensorCos { get; private set; }
+            public float RightSubsensorSin { get; private set; }
         }
     }
 }

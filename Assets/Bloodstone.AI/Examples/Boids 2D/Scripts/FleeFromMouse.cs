@@ -5,23 +5,34 @@ namespace Bloodstone.AI.Examples
 {
     public class FleeFromMouse : Seek
     {
-        private float _separationRadius = 1;
+        private Camera _camera;
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            _camera = Camera.main;
+        }
 
         public override Vector3 GetSteering()
         {
-            var camera = Camera.main;
+            TargetPosition = GetMousePosition();
 
-            var mousePos = camera.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z -= camera.transform.position.z;
-            TargetPosition = mousePos;
-
-            var dist = mousePos - Agent.Position;
-            if (dist.sqrMagnitude < _separationRadius * _separationRadius)
+            var distance = TargetPosition - Agent.Position;
+            if (distance.sqrMagnitude < Agent.PredictionRange * Agent.PredictionRange)
             {
                 return -base.GetSteering();
             }
 
             return Vector3.zero;
         }
+
+        private Vector3 GetMousePosition()
+        {
+            var mousePos = _camera.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z -= _camera.transform.position.z;
+            return mousePos;
+        }
+
     }
 }

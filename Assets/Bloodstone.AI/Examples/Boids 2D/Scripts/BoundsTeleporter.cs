@@ -39,50 +39,45 @@ namespace Bloodstone.AI.Examples.Boids
             _bottomTrigger.TriggerOccuredEvent -= BottomTriggerOccuredEvent;
         }
 
-        private void BottomTriggerOccuredEvent(Transform targetTransform)
+        private void Teleport(Transform target, Vector3 position)
         {
-            targetTransform.gameObject.SetActive(false);
+            target.gameObject.SetActive(false);
 
-            var newPosition = targetTransform.position;
+            target.position = position;
+
+            target.gameObject.SetActive(true);
+        }
+
+        private void BottomTriggerOccuredEvent(Transform target)
+        {
+            var newPosition = target.position;
             newPosition.y = _topTrigger.transform.position.y - _topTrigger.transform.localScale.y;
-            targetTransform.position = newPosition;
 
-            targetTransform.gameObject.SetActive(true);
-
+            Teleport(target, newPosition);
         }
 
-        private void RightTriggerOccuredEvent(Transform targetTransform)
+        private void RightTriggerOccuredEvent(Transform target)
         {
-            targetTransform.gameObject.SetActive(false);
-
-            var newPosition = targetTransform.position;
+            var newPosition = target.position;
             newPosition.x = _leftTrigger.transform.position.x + _leftTrigger.transform.localScale.x;
-            targetTransform.position = newPosition;
 
-            targetTransform.gameObject.SetActive(true);
-
+            Teleport(target, newPosition);
         }
 
-        private void LeftTriggerOccuredEvent(Transform targetTransform)
+        private void LeftTriggerOccuredEvent(Transform target)
         {
-            targetTransform.gameObject.SetActive(false);
-
-            var newPosition = targetTransform.position;
+            var newPosition = target.position;
             newPosition.x = _rightTrigger.transform.position.x - _rightTrigger.transform.localScale.x;
-            targetTransform.position = newPosition;
 
-            targetTransform.gameObject.SetActive(true);
+            Teleport(target, newPosition);
         }
 
-        private void TopTriggerOccuredEvent(Transform targetTransform)
+        private void TopTriggerOccuredEvent(Transform target)
         {
-            targetTransform.gameObject.SetActive(false);
-
-            var newPosition = targetTransform.position;
+            var newPosition = target.position;
             newPosition.y = _bottomTrigger.transform.position.y + _bottomTrigger.transform.localScale.y;
-            targetTransform.position = newPosition;
 
-            targetTransform.gameObject.SetActive(true);
+            Teleport(target, newPosition);
         }
     }
 }

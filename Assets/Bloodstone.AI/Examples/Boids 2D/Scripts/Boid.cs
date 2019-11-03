@@ -5,6 +5,7 @@ namespace Bloodstone.AI.Examples.Boids
     public class Boid : MonoBehaviour
     {
         private const string SpawnAnimationName = "Spawn";
+
         private readonly int _spawnAnimationHash;
 
         [SerializeField]
@@ -12,6 +13,7 @@ namespace Bloodstone.AI.Examples.Boids
 
         [SerializeField]
         private ParticleSystem _dieParticles;
+
         [SerializeField]
         private Animator _animator;
 
@@ -24,16 +26,26 @@ namespace Bloodstone.AI.Examples.Boids
 
         public void Die()
         {
+            EmitDestroyParticles();
+
+            Destroy(gameObject);
+        }
+
+        private void EmitDestroyParticles()
+        {
             _dieParticles.time = 0;
             _dieParticles.Play();
 
             _dieParticles.transform.SetParent(null);
             Destroy(_dieParticles.gameObject, _dieParticles.main.duration);
-
-            Destroy(gameObject);
         }
 
         private void Start()
+        {
+            StartSpawnAnimation();
+        }
+
+        private void StartSpawnAnimation()
         {
             _animator.keepAnimatorControllerStateOnDisable = true;
             _animator.Play(_spawnAnimationHash);

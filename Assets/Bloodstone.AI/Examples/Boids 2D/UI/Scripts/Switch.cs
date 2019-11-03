@@ -6,8 +6,9 @@ using UnityEngine.Events;
 using System;
 using TMPro;
 
-namespace Bloodstone.UI
+namespace Bloodstone.AI.Examples.Boids.UI
 {
+    [RequireComponent(typeof(Switch))]
     public class Switch : MonoBehaviour, IPointerDownHandler
     {
         [SerializeField]
@@ -15,14 +16,16 @@ namespace Bloodstone.UI
 
         [SerializeField]
         private string _onLabel;
+
         [SerializeField]
         private string _offLabel;
 
         [Header("Color settings")]
-        public Color fillColor = Color.white;
+        [SerializeField]
+        private Color _handleColorOn = Color.white;
 
-        public Color handleColorOn = Color.white;
-        public Color handleColorOff = Color.gray;
+        [SerializeField]
+        private Color _handleColorOff = Color.gray;
 
         [Space(10)]
         [Header("Feature settings")]
@@ -31,14 +34,14 @@ namespace Bloodstone.UI
         [SerializeField]
         private float _animationTime;
 
-        [Tooltip("Check this if switch have to be ON from start")]
-        public bool IsOn = true;
+        [SerializeField]
+        private bool _isOn = true;
 
         [Tooltip("Check if user can turn ON this switch")]
-        public bool CanClickOn = true;
+        public bool canTurnOn = true;
 
         [Tooltip("Check if user can turn OFF this switch")]
-        public bool CanClickOff = true;
+        public bool canTurnOff = true;
 
         [SerializeField]
         private SwitchEvent _onSwitchEvent;
@@ -46,12 +49,15 @@ namespace Bloodstone.UI
         private Slider _slider;
         private Image _handle;
 
+        public bool IsOn => _isOn;
+
         private void Awake()
         {
             _slider = GetComponentInChildren<Slider>();
+            _slider.interactable = false;
             _handle = _slider.handleRect.GetComponent<Image>();
 
-            if (IsOn)
+            if (_isOn)
             {
                 TurnOn();
             }
@@ -61,10 +67,6 @@ namespace Bloodstone.UI
             }
         }
 
-        /// <summary>
-        /// Handles pointer down on element
-        /// </summary>
-        /// <param name="eventData">Pointer's event data</param>
         public void OnPointerDown(PointerEventData eventData)
         {
             SwitchMode();
@@ -73,39 +75,33 @@ namespace Bloodstone.UI
         private void TurnOn()
         {
             StopAllCoroutines();
-            StartCoroutine(SwitchMode(handleColorOff, handleColorOn, _slider.minValue, _slider.maxValue));
+            StartCoroutine(SwitchMode(_handleColorOff, _handleColorOn, _slider.minValue, _slider.maxValue));
 
 
-            IsOn = true;
+            _isOn = true;
             _optionLabel.text = _onLabel;
-            _onSwitchEvent.Invoke(IsOn);
+            _onSwitchEvent.Invoke(_isOn);
         }
 
         private void TurnOff()
         {
             StopAllCoroutines();
-            StartCoroutine(SwitchMode(handleColorOn, handleColorOff, _slider.maxValue, _slider.minValue));
+            StartCoroutine(SwitchMode(_handleColorOn, _handleColorOff, _slider.maxValue, _slider.minValue));
 
-            IsOn = false;
+            _isOn = false;
             _optionLabel.text = _offLabel;
-            _onSwitchEvent.Invoke(IsOn);
+            _onSwitchEvent.Invoke(_isOn);
         }
 
         public void SwitchMode()
         {
-            if (IsOn)
+            if (_isOn && canTurnOff)
             {
-                if (CanClickOff)
-                {
-                    TurnOff();
-                }
+                TurnOff();
             }
-            else
+            else if (canTurnOn)
             {
-                if (CanClickOn)
-                {
-                    TurnOn();
-                }
+                TurnOn();
             }
         }
 

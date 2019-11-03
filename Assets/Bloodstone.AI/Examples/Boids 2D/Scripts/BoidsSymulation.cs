@@ -52,7 +52,7 @@ namespace Bloodstone.AI.Examples.Boids
 
         public void SwitchBorderMode(bool value)
         {
-            var newMode = _bounds.ParseMode(value);
+            var newMode = BoundsController.ParseToMode(value);
             _bounds.Mode = newMode;
         }
     }

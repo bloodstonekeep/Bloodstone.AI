@@ -8,11 +8,16 @@ namespace Bloodstone.AI.Steering.Rotation
         private const float HalfTau = Mathf.PI;
         private const float GizmosLength = 3f;
 
-        public Quaternion TargetRotation;
+        public Quaternion targetRotation;
+
+        protected virtual void Start()
+        {
+            targetRotation = Agent.Rotation;
+        }
 
         public override Vector3 GetSteering()
         {
-            var rotation = (Quaternion.Inverse(Agent.Rotation) * TargetRotation).normalized;
+            var rotation = (Quaternion.Inverse(Agent.Rotation) * targetRotation).normalized;
 
             var angle = 2 * Mathf.Acos(rotation.w);
             var halfSin = Mathf.Sin(angle / 2);
@@ -21,8 +26,6 @@ namespace Bloodstone.AI.Steering.Rotation
                 return Vector3.zero;
             }
 
-            angle = NormalizeAngle(angle);
-
             var axis = new Vector3
             {
                 x = rotation.x / halfSin,
@@ -30,6 +33,7 @@ namespace Bloodstone.AI.Steering.Rotation
                 z = rotation.z / halfSin
             };
 
+            angle = NormalizeAngle(angle);
             return axis * angle * Mathf.Rad2Deg * Agent.Statistics.angularSpeed;
         }
 
@@ -71,7 +75,7 @@ namespace Bloodstone.AI.Steering.Rotation
                     throw new System.NotSupportedException();
             }
 
-            var targetRotation = TargetRotation * forward;
+            var targetRotation = this.targetRotation * forward;
 
             forward = Agent.Rotation * forward;
 

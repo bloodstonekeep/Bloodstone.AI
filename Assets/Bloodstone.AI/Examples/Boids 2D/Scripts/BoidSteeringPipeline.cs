@@ -33,30 +33,30 @@ namespace Bloodstone.AI.Examples.Boids
 
         private void RegisterSteerings()
         {
-            _weightsDictionary[_cohesionSteering] = () => _weights.Cohesion;
-            _weightsDictionary[_separationSteering] = () => _weights.Separation;
-            _weightsDictionary[_velocityMatchSteering] = () => _weights.VelocityMatch;
-            _weightsDictionary[_collisionAvoidanceSteering] = () => _weights.CollisionAvoidance;
+            _weightsDictionary[_cohesionSteering] = () => _weights.cohesion;
+            _weightsDictionary[_separationSteering] = () => _weights.separation;
+            _weightsDictionary[_velocityMatchSteering] = () => _weights.velocityMatch;
+            _weightsDictionary[_collisionAvoidanceSteering] = () => _weights.collisionAvoidance;
 
             _steeringBehaviours = _weightsDictionary.Keys.ToList();
         }
 
         public override Vector3 GetMovementSteering()
         {
-            var boidResult = Vector3.zero;
+            var netSteering = Vector3.zero;
 
             foreach(var steering in _steeringBehaviours)
             {
                 var weight = _weightsDictionary[steering]?.Invoke();
                 if(weight.HasValue)
                 {
-                    boidResult += steering.GetSteering() * weight.Value;
+                    netSteering += steering.GetSteering() * weight.Value;
                 }
             }
 
-            boidResult /= _steeringBehaviours.Count;
+            netSteering /= _steeringBehaviours.Count;
 
-            return (base.GetMovementSteering() + boidResult) / 2;
+            return (base.GetMovementSteering() + netSteering) / 2;
         }
     }
 }

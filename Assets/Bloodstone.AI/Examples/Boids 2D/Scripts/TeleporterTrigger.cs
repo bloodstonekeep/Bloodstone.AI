@@ -1,13 +1,16 @@
 ﻿using System;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
-public class TeleporterTrigger : MonoBehaviour
+namespace Bloodstone.AI.Examples.Boids
 {
-    public event Action<Transform> TriggerOccuredEvent;
-
-    private void OnTriggerEnter2D(Collider2D collider)
+    [RequireComponent(typeof(BoxCollider2D))]
+    public class TeleporterTrigger : MonoBehaviour
     {
-        TriggerOccuredEvent?.Invoke(collider.transform);
+        public event Action<Transform> TriggerOccuredEvent;
+
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            TriggerOccuredEvent?.Invoke(collider.transform);
+        }
     }
 }

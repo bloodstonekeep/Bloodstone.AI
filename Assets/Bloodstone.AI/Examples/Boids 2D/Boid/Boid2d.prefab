@@ -9831,7 +9831,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26651d4a0c26994ca010100b8235982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementBehaviours: []
+  movementBehaviours:
+  - _behaviour: {fileID: 1848317136638337246}
+    _weight: 1
+  - _behaviour: {fileID: 1573308665451634283}
+    _weight: 1
   rotationBehaviours: []
   _weights: {fileID: 11400000, guid: c301a23ac32588649b956fb7ba62f069, type: 2}
   _cohesionSteering: {fileID: 6960810868787465339}
@@ -9905,14 +9909,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showGizmos: 0
-  PerceptionRadius: 1.5
-  _obstacleLayer: 256
-  _avoidance: 0.75
-  _sensorsAngle: 1.0471976
-  _leftSensorCos: 0.49999997
-  _leftSensorSin: 0.86602545
-  _rightSensorCos: 0.49999997
-  _rightSensorSin: -0.86602545
+  _obstacleLayerIndex: 8
+  _subsensorsAngle: 1.047198
+  avoidanceDistance: 0.75
 --- !u!114 &7579791402746979065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9926,7 +9925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showGizmos: 0
-  TargetRotation: {x: 0, y: 0, z: 0, w: 0}
+  targetRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &1573308665451634283
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ namespace Bloodstone.AI.Examples.Boids.UI
         [SerializeField]
         [Tooltip("x = alpha when in Hidden state, y = alpha when in Visible state")]
         private Vector2 _fadeAlphaRange = new Vector2(0, 1);
+
         [SerializeField]
         private float _fadeDuration = 0.2f;
 

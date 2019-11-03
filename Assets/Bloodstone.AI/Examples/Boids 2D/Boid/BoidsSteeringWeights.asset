@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69412ef3f55dcfc46a0954382a0db529, type: 3}
   m_Name: BoidsSteeringWeights
   m_EditorClassIdentifier: 
-  Cohesion: 0.7
-  Separation: 2
-  VelocityMatch: 0.7
-  CollisionAvoidance: 2
+  cohesion: 0.7
+  separation: 2
+  velocityMatch: 0.7
+  collisionAvoidance: 2

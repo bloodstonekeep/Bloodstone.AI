@@ -14,8 +14,19 @@ namespace Bloodstone.AI.Examples.Boids.UI
         [Space(5)]
         [SerializeField]
         private BoidsSymulation _boidsSymulation;
+
         [SerializeField]
         private BoidSteeringWeights _weight;
+
+        public void Show()
+        {
+            _view.Show();
+        }
+
+        public void Hide()
+        {
+            _view.Hide();
+        }
 
         public void ApplicationQuit()
         {
@@ -24,22 +35,22 @@ namespace Bloodstone.AI.Examples.Boids.UI
 
         public void SetBoidsCohesion(float value)
         {
-            _weight.Cohesion = value;
+            _weight.cohesion = value;
         }
 
         public void SetBoidsSeparation(float value)
         {
-            _weight.Separation = value;
+            _weight.separation = value;
         }
 
         public void SetBoidsVelocityMatch(float value)
         {
-            _weight.VelocityMatch = value;
+            _weight.velocityMatch = value;
         }
 
         public void SetBoidsCollisionAvoidance(float value)
         {
-            _weight.CollisionAvoidance = value;
+            _weight.collisionAvoidance = value;
         }
 
         public void AddBoids(int count)
@@ -61,16 +72,6 @@ namespace Bloodstone.AI.Examples.Boids.UI
         public void SwitchBorderMode(bool value)
         {
             _boidsSymulation.SwitchBorderMode(value);
-        }
-
-        public void Show()
-        {
-            _view.Show();
-        }
-
-        public void Hide()
-        {
-            _view.Hide();
         }
 
         private void Start()

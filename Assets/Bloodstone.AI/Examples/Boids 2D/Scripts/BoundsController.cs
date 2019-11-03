@@ -13,6 +13,11 @@ namespace Bloodstone.AI.Examples.Boids
         [SerializeField]
         private BoundsMode _mode;
 
+        public static BoundsMode ParseToMode(bool value)
+        {
+            return value ? BoundsMode.Teleporter : BoundsMode.PhysicalBlocks;
+        }
+
         public BoundsMode Mode
         {
             get => _mode;
@@ -26,12 +31,6 @@ namespace Bloodstone.AI.Examples.Boids
                 _mode = value;
                 ActivateMode();
             }
-        }
-
-        // todo: extension to enum
-        public BoundsMode ParseMode(bool value)
-        {
-            return value ? BoundsMode.Teleporter : BoundsMode.PhysicalBlocks;
         }
 
         private void Awake()
