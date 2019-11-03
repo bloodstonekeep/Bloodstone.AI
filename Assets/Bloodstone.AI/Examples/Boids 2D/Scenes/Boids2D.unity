@@ -346,7 +346,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 5
-    height: 5
+    height: 8
   _boidsParent: {fileID: 1692062010}
   _boidPrototype: {fileID: -3941012053848632535, guid: 453431a291ee0534f880c9b6c74919c5,
     type: 3}
