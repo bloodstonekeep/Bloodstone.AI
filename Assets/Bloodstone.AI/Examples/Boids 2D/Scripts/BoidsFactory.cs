@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Bloodstone.AI.Steering;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace Bloodstone.AI.Examples.Boids
@@ -17,7 +18,7 @@ namespace Bloodstone.AI.Examples.Boids
             var agent = newBoid.GetComponentInChildren<Agent>();
             agent.Prediction = new SteeringPrediction()
             {
-                Velocity = RandomVector2()
+                velocity = RandomVector2()
             };
 
             var subsystem = newBoid.GetComponentInChildren<AISubsystem>();

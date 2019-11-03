@@ -1,4 +1,5 @@
-﻿using Bloodstone.AI.Utility;
+﻿using Bloodstone.AI.Steering;
+using Bloodstone.AI.Utility;
 using UnityEngine;
 
 namespace Bloodstone.AI
@@ -12,11 +13,14 @@ namespace Bloodstone.AI
         private AgentStatistics _statistics;
         [SerializeField]
         private float _predictionRange = 1f;
+        [SerializeField]
+        private float _radius = 0.2f;
 
         [ReadOnly]
         [SerializeField]
         private SteeringPrediction _prediction;
 
+        public float Radius => _radius;
         public float PredictionRange => _predictionRange;
         public AgentStatistics Statistics => _statistics;
         public WorldOrientation WorldOrientation => _worldOrientation;

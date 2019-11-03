@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Bloodstone.AI.Steering
+namespace Bloodstone.AI.Steering.Rotation
 {
     public class LookForward : Align
     {

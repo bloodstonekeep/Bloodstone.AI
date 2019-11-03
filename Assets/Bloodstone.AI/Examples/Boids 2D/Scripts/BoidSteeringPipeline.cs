@@ -1,4 +1,5 @@
 ﻿using Bloodstone.AI.Steering;
+using Bloodstone.AI.Steering.Movement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace Bloodstone.AI.Examples.Boids
             _steeringBehaviours = _weightsDictionary.Keys.ToList();
         }
 
-        public override Vector3 MovementSteering()
+        public override Vector3 GetMovementSteering()
         {
             var boidResult = Vector3.zero;
 
@@ -55,7 +56,7 @@ namespace Bloodstone.AI.Examples.Boids
 
             boidResult /= _steeringBehaviours.Count;
 
-            return (base.MovementSteering() + boidResult) / 2;
+            return (base.GetMovementSteering() + boidResult) / 2;
         }
     }
 }

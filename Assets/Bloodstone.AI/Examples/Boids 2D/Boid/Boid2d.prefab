@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f535c2e1c1f0a44811c72bc09f2e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agent: {fileID: 4062446911622647796}
+  agent: {fileID: 4062446911622647796}
 --- !u!50 &3335778712754335447
 Rigidbody2D:
   serializedVersion: 4
@@ -9798,14 +9798,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c17cd3ca11e454696a7bfa853b6e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _predictionRange: 1
-  _statistics:
-    _maximumSpeed: 1
-    _maximumAngularSpeed: 100
   _worldOrientation: 0
+  _statistics:
+    speed: 1
+    angularSpeed: 100
+  _predictionRange: 1
+  _radius: 0.2
   _prediction:
-    Velocity: {x: 0, y: 0, z: 0}
-    AngularVelocity: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    angularVelocity: {x: 0, y: 0, z: 0}
 --- !u!114 &3269810303092030192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9818,7 +9819,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 376ab5719c7581b4a93135b40b70c385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agent: {fileID: 4062446911622647796}
 --- !u!114 &6672586108734233299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9831,12 +9831,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26651d4a0c26994ca010100b8235982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movement:
-  - _behaviour: {fileID: 1848317136638337246}
-    _weight: 2
-  - _behaviour: {fileID: 1573308665451634283}
-    _weight: 2
-  _rotation: []
+  movementBehaviours: []
+  rotationBehaviours: []
   _weights: {fileID: 11400000, guid: c301a23ac32588649b956fb7ba62f069, type: 2}
   _cohesionSteering: {fileID: 6960810868787465339}
   _separationSteering: {fileID: 6960810868787465338}
@@ -9896,7 +9892,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showGizmos: 0
-  Radius: 0.2
 --- !u!114 &1848317136638337246
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,27 +1,29 @@
 ﻿using UnityEngine;
 
-namespace Bloodstone.AI.Steering
+namespace Bloodstone.AI.Steering.Movement
 {
     public class VelocityMatch : LocalAwarenessMovement
     {
         public override Vector3 GetSteering()
         {
-            if (Neighborhood.Count == 0)
+            if (Neighbourhood.Count == 0)
             {
                 return Vector3.zero;
             }
 
-            Vector3 netForce = Vector3.zero;
+            return CalculateAverageLocalVelocity();
+        }
 
-            foreach (var agent in Neighborhood)
+        private Vector3 CalculateAverageLocalVelocity()
+        {
+            Vector3 averageVelocity = Vector3.zero;
+
+            foreach (var agent in Neighbourhood)
             {
-                netForce += agent.Velocity;
+                averageVelocity += agent.Velocity;
             }
 
-            netForce /= Neighborhood.Count;
-
-            //return netForce.normalized * Agent.Statistics.MaximumSpeed;
-            return netForce;
+            return averageVelocity /= Neighbourhood.Count;
         }
     }
 }

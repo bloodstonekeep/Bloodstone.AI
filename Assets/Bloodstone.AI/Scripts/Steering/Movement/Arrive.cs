@@ -1,19 +1,18 @@
-﻿using Bloodstone.AI.Steering;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Bloodstone.AI.Steering
+namespace Bloodstone.AI.Steering.Movement
 {
     public class Arrive : Seek
     {
         [SerializeField]
         private float _arriveRadius = 1f;
 
-        protected float ArriveRadiusSquared => _arriveRadius * _arriveRadius;
+        protected float SquaredArriveRadius => _arriveRadius * _arriveRadius;
 
         public override Vector3 GetSteering()
         {
             var distance = TargetPosition - Agent.Position;
-            if(distance.sqrMagnitude < ArriveRadiusSquared)
+            if(distance.sqrMagnitude < SquaredArriveRadius)
             {
                 return Vector3.zero;
             }

@@ -1,4 +1,4 @@
-﻿using Bloodstone.AI.Steering;
+﻿using Bloodstone.AI.Steering.Movement;
 using UnityEngine;
 
 namespace Bloodstone.AI.Examples

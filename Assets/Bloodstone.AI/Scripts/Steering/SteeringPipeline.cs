@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Bloodstone.AI.Steering.Movement;
+using Bloodstone.AI.Steering.Rotation;
 using UnityEngine;
 
 namespace Bloodstone.AI.Steering
@@ -10,9 +12,9 @@ namespace Bloodstone.AI.Steering
         private AISubsystem _subsystem;
 
         [SerializeField]
-        private List<WeightedMovement> _movement;
+        protected List<WeightedMovement> movementBehaviours;
         [SerializeField]
-        private List<WeightedRotation> _rotation;
+        protected List<WeightedRotation> rotationBehaviours;
 
         protected virtual void Awake()
         {
@@ -29,25 +31,25 @@ namespace Bloodstone.AI.Steering
             _subsystem.Remove(this);
         }
 
-        public virtual Vector3 MovementSteering()
+        public virtual Vector3 GetMovementSteering()
         {
-            return BlendSteerings<WeightedMovement, MovementSteering>(_movement);
+            return BlendSteerings<WeightedMovement, MovementSteering>(movementBehaviours);
         }
 
-        public virtual Vector3 RotationSteering()
+        public virtual Vector3 GetRotationSteering()
         {
-            return BlendSteerings<WeightedRotation, RotationSteering>(_rotation);
+            return BlendSteerings<WeightedRotation, RotationSteering>(rotationBehaviours);
         }
 
         private Vector3 BlendSteerings<T, T2>(IList<T> input) where T : WeightedSteering<T2> where T2 : ISteeringBehaviour
         {
-            if(input.Count == 0)
+            if (input.Count == 0)
             {
                 return Vector3.zero;
             }
 
             Vector3 result = new Vector3();
-            for(int i = 0; i < input.Count; ++i)
+            for (int i = 0; i < input.Count; ++i)
             {
                 var w = input[i].Weight;
                 if (w == 0)
@@ -59,36 +61,15 @@ namespace Bloodstone.AI.Steering
 
             return result / input.Count;
         }
-    }
 
-    public class WeightedSteering<T>
-    {
-        [SerializeField]
-        private T _behaviour;
-
-        [SerializeField]
-        private float _weight = 1f;
-
-        public float Weight
+        [Serializable]
+        protected class WeightedMovement : WeightedSteering<MovementSteering>
         {
-            get => _weight;
-            set => _weight = value;
         }
 
-        public T Behaviour
+        [Serializable]
+        protected class WeightedRotation : WeightedSteering<RotationSteering>
         {
-            get => _behaviour;
-            set => _behaviour = value;
         }
-    }
-
-    [Serializable]
-    public class WeightedMovement : WeightedSteering<MovementSteering>
-    {
-    }
-
-    [Serializable]
-    public class WeightedRotation : WeightedSteering<RotationSteering>
-    {
     }
 }

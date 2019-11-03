@@ -6,12 +6,4 @@ namespace Bloodstone.AI.Steering
     {
         Vector3 GetSteering();
     }
-
-    public interface IRotationSteering : ISteeringBehaviour
-    {
-    }
-
-    public interface IMovementSteering : ISteeringBehaviour
-    {
-    }
 }

@@ -4,45 +4,54 @@ using UnityEngine;
 
 namespace Bloodstone.AI
 {
-    [ExecuteAlways]
-    sealed public class AISubsystem : MonoBehaviour
+    [ExecuteInEditMode]
+    [RequireComponent(typeof(Agent))]
+    public sealed class AISubsystem : MonoBehaviour
     {
-        [SerializeField]
         private Agent _agent;
 
-        private List<ISteeringPipeline> _agentsPipelines = new List<ISteeringPipeline>();
+        private readonly List<ISteeringPipeline> _agentPipelines = new List<ISteeringPipeline>();
 
-        public List<Agent> Neighborhood { get; set; } = new List<Agent>();
-        public Agent Agent => _agent;
+        public List<Agent> Neighbourhood { get; set; } = new List<Agent>();
 
         public void Add(ISteeringPipeline steeringPipeline)
         {
-            _agentsPipelines.Add(steeringPipeline);
+            _agentPipelines.Add(steeringPipeline);
         }
 
         public void Remove(ISteeringPipeline steeringPipeline)
         {
-            _agentsPipelines.Remove(steeringPipeline);
+            _agentPipelines.Remove(steeringPipeline);
         }
 
-        public void Update()
+        private void Awake()
+        {
+            _agent = GetComponent<Agent>();
+        }
+
+        private void Update()
+        {
+            _agent.Prediction = CalulateNewPrediction();
+        }
+
+        private SteeringPrediction CalulateNewPrediction()
         {
             var newSteering = new SteeringPrediction();
 
-            foreach (var pipeline in _agentsPipelines)
+            var pipelinesCount = _agentPipelines.Count;
+            if (pipelinesCount != 0)
             {
-                newSteering.Velocity += pipeline.MovementSteering();
-                newSteering.AngularVelocity += pipeline.RotationSteering();
+                foreach (var pipeline in _agentPipelines)
+                {
+                    newSteering.velocity += pipeline.GetMovementSteering();
+                    newSteering.angularVelocity += pipeline.GetRotationSteering();
+                }
+
+                newSteering.velocity /= pipelinesCount;
+                newSteering.angularVelocity /= pipelinesCount;
             }
 
-            int count = _agentsPipelines.Count;
-            if (count != 0)
-            {
-                newSteering.Velocity /= count;
-                newSteering.AngularVelocity /= count;
-            }
-
-            _agent.Prediction = newSteering;
+            return newSteering;
         }
     }
 }

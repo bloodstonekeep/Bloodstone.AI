@@ -1,61 +1,59 @@
 ﻿using UnityEngine;
 
-namespace Bloodstone.AI.Steering
+namespace Bloodstone.AI.Steering.Movement
 {
     public class CollisionAvoidance : LocalAwarenessMovement
     {
-        public float Radius = 0.2f;
-
         public override Vector3 GetSteering()
         {
-            if (Neighborhood.Count == 0)
+            if (Neighbourhood.Count == 0
+                || !TryPredictCollision(out var collisionAgent, out var timeToCollision))
             {
-                return Vector2.zero;
+                return Vector3.zero;
             }
 
-            float maxPredictionDistance = Radius * 1.5f;
+            return CalculateAvoidanceForce(collisionAgent, timeToCollision);
+        }
 
-            float timeToCollision = float.MaxValue;
-            Agent target = null;
+        private Vector3 CalculateAvoidanceForce(Agent collisionAgent, float timeToCollision)
+        {
+            var relativePosition = Agent.Position - collisionAgent.Position;
 
-            foreach (var a in Neighborhood)
+            if (timeToCollision > 0
+                || relativePosition.sqrMagnitude > Agent.Radius * Agent.Radius)
             {
-                var relativePos = (Agent.Position - a.Position);
+                var relativeVelocity = Agent.Velocity - collisionAgent.Velocity;
+
+                return relativePosition + relativeVelocity * timeToCollision;
+            }
+            return relativePosition;
+        }
+
+        private bool TryPredictCollision(out Agent collisionAgent, out float timeToCollision)
+        {
+            timeToCollision = float.MaxValue;
+            collisionAgent = null;
+
+            float maxPredictionDistance = Agent.Radius + Agent.PredictionRange;
+            foreach (var a in Neighbourhood)
+            {
+                var relativePos = Agent.Position - a.Position;
                 if (relativePos.sqrMagnitude > maxPredictionDistance * maxPredictionDistance)
                 {
                     continue;
                 }
 
-                var relativeVelocity = (Agent.Velocity - a.Velocity);
-                var estimatedTime = -Vector2.Dot(relativePos, relativeVelocity) / relativeVelocity.sqrMagnitude;
+                var relativeVelocity = Agent.Velocity - a.Velocity;
+                var estimatedTime = -Vector3.Dot(relativePos, relativeVelocity) / relativeVelocity.sqrMagnitude;
 
                 if (estimatedTime > 0 && estimatedTime < timeToCollision)
                 {
-                    target = a;
+                    collisionAgent = a;
                     timeToCollision = estimatedTime;
                 }
             }
 
-            if (target == null)
-            {
-                return Vector2.zero;
-            }
-
-            Vector2 result;
-
-            if (timeToCollision <= 0 || (Agent.Position - target.Position).sqrMagnitude < Radius * Radius)
-            {
-                result = Agent.Position - target.Position;
-            }
-            else
-            {
-                var pos = Agent.Position - target.Position;
-                var vel = Agent.Velocity - target.Velocity;
-
-                result = pos + vel * timeToCollision;
-            }
-
-            return result;
+            return collisionAgent != null;
         }
     }
 }

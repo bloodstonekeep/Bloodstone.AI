@@ -19,7 +19,7 @@ namespace Bloodstone.AI.Examples.Boids
         {
             foreach(var boid in _boids)
             {
-                _subsystems[boid].Neighborhood = _boids.Where(a => a != boid)
+                _subsystems[boid].Neighbourhood = _boids.Where(a => a != boid)
                                                         .Select(b => b.Agent)
                                                         .Where(a => (a.transform.position - boid.Agent.Position).sqrMagnitude < boid.Agent.PredictionRange * boid.Agent.PredictionRange)
                                                         .ToList();

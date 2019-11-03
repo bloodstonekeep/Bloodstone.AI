@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Bloodstone.AI.Steering
+namespace Bloodstone.AI.Steering.Rotation
 {
     public class Align : RotationSteering
     {
@@ -30,7 +30,7 @@ namespace Bloodstone.AI.Steering
                 z = rotation.z / halfSin
             };
 
-            return axis * angle * Mathf.Rad2Deg * Agent.Statistics.MaximumAngularSpeed;
+            return axis * angle * Mathf.Rad2Deg * Agent.Statistics.angularSpeed;
         }
 
         private static float NormalizeAngle(float angle)
