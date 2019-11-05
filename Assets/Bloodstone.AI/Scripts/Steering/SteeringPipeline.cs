@@ -41,7 +41,7 @@ namespace Bloodstone.AI.Steering
             return BlendSteerings<WeightedRotation, RotationSteering>(rotationBehaviours);
         }
 
-        private Vector3 BlendSteerings<T, T2>(IList<T> input) where T : WeightedSteering<T2> where T2 : ISteeringBehaviour
+        private Vector3 BlendSteerings<TType, TSteering>(IList<TType> input) where TType : WeightedSteering<TSteering> where TSteering : ISteeringBehaviour
         {
             if (input.Count == 0)
             {
