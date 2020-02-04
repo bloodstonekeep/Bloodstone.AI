@@ -53,6 +53,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4945,6 +4946,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9698,6 +9700,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9867,7 +9870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe69a91cc33d74429a33b8a2d575f4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 0
+  showGizmos: 1
   _threshold: 0.5
   _decayCoefficient: -0.1
 --- !u!114 &6960810868787465339
@@ -9908,7 +9911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ad07a765cf11f408b5a4a3ce6c162a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGizmos: 0
+  showGizmos: 1
   _obstacleLayerIndex: 8
   _subsensorsAngle: 1.047198
   avoidanceDistance: 0.75

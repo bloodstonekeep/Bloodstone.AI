@@ -46,6 +46,20 @@ namespace Bloodstone.AI.Examples.Boids
             _sensorsData.UpdateAngle(_subsensorsAngle);
         }
 
+        protected override void DrawGizmos()
+        {
+            base.DrawGizmos();
+
+            Vector2 forward = Agent.Velocity;
+            var leftDir = forward.Rotate(_sensorsData.LeftSubsensorSin, _sensorsData.LeftSubsensorCos);
+            var rightDir = forward.Rotate(_sensorsData.RightSubsensorSin, _sensorsData.RightSubsensorCos);
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(transform.position, transform.position + forward.ToVector3());
+            Gizmos.DrawLine(transform.position, transform.position + leftDir.ToVector3());
+            Gizmos.DrawLine(transform.position, transform.position + rightDir.ToVector3());
+        }
+
         private Vector3 SensorRaycast(Vector3 direction)
         {
             switch (Agent.WorldOrientation)

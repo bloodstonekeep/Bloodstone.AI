@@ -17,3 +17,14 @@ Update Mode: updateDependencies
 
 The following packages were updated:
   com.unity.ide.vscode from version 1.1.0 to 1.1.2
+
+=== Tue Feb  4 20:51:45 2020
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.analytics from version 3.3.2 to 3.3.5
+  com.unity.ide.vscode from version 1.1.2 to 1.1.4
+  com.unity.probuilder from version 4.1.0 to 4.2.3
+  com.unity.test-framework from version 1.1.1 to 1.1.9
