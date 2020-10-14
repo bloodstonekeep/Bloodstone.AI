@@ -1,37 +1,35 @@
-﻿using System;
-using UnityEngine;
+﻿using Bloodstone.Extensions;
 
 namespace Bloodstone
 {
-    [Serializable]
-    public class StateMachine<T> where T : State
+    public class StateMachine<TState, TContext>
+        where TContext : StateContext
+        where TState : IState<TContext>
     {
-        [SerializeField]
-        private State _currentState;
+        private TState _currentState;
 
-        public StateMachine(State initialState)
+        public StateMachine(TState state)
         {
-            if (initialState is null)
-            {
-                throw new ArgumentNullException(nameof(initialState));
-            }
+            State = state.ThrowIfNull(nameof(state));
+        }
 
-            SetState(initialState);
+        public TState State
+        {
+            get => _currentState;
+            set
+            {
+                _currentState?.Deactivate();
+                _currentState = value;
+                _currentState.Activate();
+            }
         }
 
         public void Tick()
         {
-            _currentState?.Tick();
         }
 
-        public void SetState(State newState)
+        public void TickPhysics()
         {
-            if (_currentState != newState)
-            {
-                _currentState?.Deactivate();
-                _currentState = newState;
-                _currentState.Activate();
-            }
         }
     }
 }
