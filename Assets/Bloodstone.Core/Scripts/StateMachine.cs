@@ -18,18 +18,24 @@ namespace Bloodstone
             get => _currentState;
             set
             {
-                _currentState?.Deactivate();
-                _currentState = value;
-                _currentState.Activate();
+                if (value != null
+                    && !_currentState.Equals(value))
+                {
+                    _currentState.Deactivate();
+                    _currentState = value;
+                    _currentState.Activate();
+                }
             }
         }
 
         public void Tick()
         {
+            _currentState.Tick();
         }
 
         public void TickPhysics()
         {
+            _currentState.TickPhysics();
         }
     }
 }
