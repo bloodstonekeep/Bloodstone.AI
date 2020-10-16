@@ -1,9 +1,11 @@
 {
-    "name": "Bloodstone.AI",
+    "name": "Bloodstone.AI.Editor",
     "references": [
-        "GUID:5dbc8b550e7f8c34582863eb81b56d6b"
+        "GUID:11c4cb39d74a1ad44b670fe18f545c16"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
